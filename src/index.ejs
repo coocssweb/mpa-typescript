@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title><%= title %></title>
+    <meta name="keyword" content="<%= keyword %>">
+    <meta name="description" content="<%= description %>">
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" name="viewport">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="format-detection" content="telephone=no" />
+    <script>
+        ; (function (win, doc) {
+            var docEl = doc.documentElement,
+                UA = navigator.userAgent,
+                isMeitu = /meitu|meipai/gi.test(UA);
+            var refreshRem = function () {
+                var w = docEl.getBoundingClientRect().width || 320;
+                var fontSize = w / 320 * 20;
+                fontSize = fontSize > 40 ? 40 : fontSize;
+                docEl.style.fontSize = fontSize + 'px';
+                var finalFontSize = parseFloat(win.getComputedStyle(docEl).getPropertyValue("font-size"));
+                if (finalFontSize === fontSize || isMeitu) return;
+                fontSize = fontSize + (fontSize - finalFontSize);
+                docEl.style.fontSize = fontSize + 'px';
+                win.fontSize = fontSize;
+            }, refreshRemId;
+            win.addEventListener('resize', function () {
+                clearTimeout(refreshRemId);
+                refreshRemId = setTimeout(refreshRem, 100);
+            }, false);
+            win.addEventListener('pageshow', function (e) {
+                if (e.persisted) {
+                    clearTimeout(refreshRemId);
+                    refreshRemId = setTimeout(refreshRem, 100);
+                }
+            }, false);
+            refreshRem();
+        })(window, document);
+    </script>
+</head>
+
+<body>
+    <!-- 首页 -->
+    <div class="home page show">
+
+    </div>
+
+    <div class="test page">
+
+    </div>
+
+    <div class="tip"></div>
+
+    <div class="mask show" id="loading-mask">
+        <div class="line line-top"></div>
+        <div class="line line-bot"></div>
+        <div class="loading-box">
+            <img src="data:image/png;base64,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" />
+        </div>
+    </div>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://"); document.write(unescape("%3Cspan id='cnzz_stat_icon_1273312687'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "w.cnzz.com/c.php%3Fid%3D1273312687' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+    <script type="text/javascript" src="http://wechatfe.github.io/vconsole/lib/vconsole.min.js?v=3.2.0"></script>
+    <script type="text/javascript">
+        var vConsole = new VConsole();
+    </script>
+
+</body>
+</html>
