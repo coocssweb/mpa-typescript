@@ -1,47 +1,114 @@
 /**
- * 路由管理
+ *
  * Created by 王佳欣 on 2018/4/11.
  */
-import URI from 'urijs';
-
-// 替换Hash
-const replaceHash = (path) => {
-    window.location.replace(`${_uri.origin()}/#${path}`);
+const getPath = (path) => {
+    return path ? path.replace(/^\//, '') : 'default'
 };
 
-
-
-export default class Router {
-    constructor (routes) {
-        this.routes = routes;
-        this.current = {
-            path: location.path || '/',
-            hash: location.hash || '',
+// 组件解析
+const resolveComponents = (routes) => {
+    let matched = {};
+    routes.map((route) => {
+        matched[getPath(route.path)] = {
+            path: route.path,
+            component: route.component,
+            beforeEnter: route.beforeEnter
         };
-    }
-    // 解析组件
-    resolveComponents () {
+    });
+    return matched;
+};
 
+// 解析URL地址
+// return {path, query, hash}
+const parsePath = (path) => {
+    let hash = '';
+    let queryStr = '';
+    let query = {};
+    const hashIndex = path.indexOf('#');
+    if (hasIndex >= 0) {
+        hash = path.slice(hashIndex);
+        path = path.slice(0, hashIndex);
     }
-    match () {
 
+    const queryIndex = path.indexOf('?');
+    if (queryIndex >= 0) {
+        queryStr = path.slice(queryIndex + 1);;
+        path = path.slice(0, queryIndex);
     }
-    // 跳转
-    transitionTo (hash, done) {
-        done && done();
+
+    if (queryStr) {
+        queryStr.split('&').map((item) => {
+            let values = item.split(':');
+            if (values[0]) {
+                query[values[0]] = values.length > 1 ? values[1] : '';
+            }
+        });
     }
+
+    return { path, query, hash: hash || 'default' };
+};
+
+// 字符串化path
+// return path?key1=value1&key2=value2
+const stringifyQuery = (path) => {
+    const res = Object.keys(path.query).map((key) => {
+        return `${key}=${path.query[key]}`;
+    });
+
+    return res.join('&');
+};
+
+class Router {
+    constructor(options) {
+        let {path, query, hash} = parsePath(location.href);
+        let matched = resolveComponents(options.routes);
+        Object.assign(this, path, query, hash, matched);
+    }
+
+    /**
+     * 路由替换
+     */
+    replace (hash) {
+        window.location.replace(`${this.path}$/#${this.hash}`);
+    }
+
+    /**
+     * 路由push
+     */
+    push (hash) {
+        window.location.hash = hash;
+    }
+
+    /**
+     * 路由跳转
+     */
+    transitionTo (hash, onComplete) {
+        let current = this.matched[hash];
+        if (current.created) {
+            current.component.open();
+        } else {
+            current.component.created();
+            current.created = true;
+        }
+
+        onComplete && onComplete();
+    }
+
     /**
      * 路由监听
      */
     setupListeners () {
         window.addEventListener('hashchange', () => {
-            let uri = new URI();
-            this.transitionTo(uri.hash(), route => {
-                replaceHash(route.fullPath)
-            })
-        })
+
+        });
     }
+
+    /**
+     * 初始化
+     */
     init () {
         this.setupListeners();
+        this.transitionTo(this.hash);
     }
 };
