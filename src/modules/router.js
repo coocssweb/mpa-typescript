@@ -51,33 +51,33 @@ const parsePath = (path) => {
 
 // 字符串化path
 // return path?key1=value1&key2=value2
-const stringifyPath = (path) => {
+const stringifyQuery = (path) => {
     const res = Object.keys(path.query).map((key) => {
         return `${key}=${path.query[key]}`;
     });
 
-    return `${path.path}?${res.join('&')}`;
+    return res.join('&');
 };
 
 class Router {
-    constructor(routes) {
+    constructor(options) {
         let {path, query, hash} = parsePath(location.href);
-        let matched = resolveComponents(routes);
+        let matched = resolveComponents(options.routes);
         Object.assign(this, path, query, hash, matched);
     }
 
     /**
      * 路由替换
      */
-    replace (path) {
-
+    replace (hash) {
+        window.location.replace(`${this.path}$/#${this.hash}`);
     }
 
     /**
      * 路由push
      */
-    push (path) {
-
+    push (hash) {
+        window.location.hash = hash;
     }
 
     /**
