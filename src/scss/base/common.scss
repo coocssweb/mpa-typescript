@@ -91,17 +91,21 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     z-index: 2;
     background-color: #ffffff;
     overflow-y: auto;
-    &.animating{
-        z-index: 10;
+    background: {
+        size:cover;
     }
     &.show{
         display: block;
+        transform: translate3D(0px,0px,0px);
+    }
+    &.animating{
+        z-index: 10;
+    }
+    &.open{
+        display: block;
         animation: slideInRight 0.5s linear forwards;
     }
-    &.out{
+    &.close{
         animation: slideOutRight 0.5s linear forwards;
-    }
-    background: {
-        size:cover;
     }
 }

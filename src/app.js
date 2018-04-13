@@ -4,8 +4,8 @@
  */
 
 class App {
-    constructor (option) {
-        this.$router = option.routes;
+    constructor ({router}) {
+        this._router = router;
     }
 
     /**
@@ -36,3 +36,5 @@ class App {
 
     }
 };
+
+export default App;
