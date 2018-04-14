@@ -11,13 +11,16 @@ export default {
 
     },
     bindEvent () {
-
+        $('.js_transition').click(() => {
+            console.log(this);
+        });
     },
     bindData () {
 
     },
-    created () {
+    create () {
         console.log('home created');
+        this.bindEvent();
         this.open();
     }
 };
