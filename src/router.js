@@ -29,4 +29,6 @@ const routes = [
     }
 ];
 
-export default new Router({routes});
+let router = new Router({routes});
+
+export default router;

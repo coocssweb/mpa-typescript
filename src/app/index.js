@@ -2,6 +2,16 @@
  * 入口文件
  * Created by 王佳欣 on 2018/4/14.
  */
+
+function _extend (destination, source) {
+    for (let key in source) {
+        if (source.hasOwnProperty(key)) {
+            destination[key] = source[key];
+        }
+    }
+    return destination;
+}
+
 function App (options) {
     this._init(options);
 };
@@ -39,39 +49,43 @@ function initEvents (App) {
         }
     };
 
-    // 页面切换
-    App.prototype.$page = {
-        // 打开页面
-        open (complete) {
-            complete && complete();
-        },
-        // 关闭页面
-        close (complete) {
-            complete && complete();
+    App.prototype.open = function () {
+        console.log(this.$router.query);
+        if (this.el && this.el.$page) {
+            this.el.$page.addClass('animating').addClass('open');
+            setTimeout(() => {
+                this.el.$page.addClass('show').removeClass('animating').removeClass('open');
+            }, 500);
         }
     };
 
     App.prototype.close = function () {
-        console.log('close');
+        if (this.el && this.el.$page) {
+            this.el.$page.addClass('animating').addClass('close');
+            setTimeout(() => {
+                this.el.$page.removeClass('show').removeClass('animating').removeClass('close');
+            }, 500);
+        }
     };
 
-    App.prototype.open = function () {
-        console.log('open');
+    App.prototype.beforeCreate = function () {
+
     };
 
     App.prototype.create = function () {
-        console.log('create App');
-    };
-
-    App.prototype.create = function () {
-        console.log('create Rest');
+        if (this.bindEvent) {
+            this.bindEvent();
+        }
+        this.open();
     };
 };
 
 // 定义App._init
 function init (App) {
     App.prototype._init = function (options) {
-        this.$options = options;
+        this.$options = options || this.$options;
+        this.beforeCreate();
+        this.create();
     };
 };
 
@@ -104,9 +118,8 @@ function initExtend (App) {
         Sub.prototype = Object.create(Super.prototype);
         Sub.prototype.constructor = Sub;
 
-        Sub.options = Object.assign(
-            {},
-            Super.options,
+        _extend(
+            Sub.prototype,
             extendOptions
         );
 
@@ -117,9 +130,10 @@ function initExtend (App) {
 
 function initMixin (App) {
     App.mixin = function (mixin) {
-        App.prototype.create = function () {
-            console.log('create Other');
-        };
+        _extend(
+            App.prototype,
+            mixin
+        );
     };
 }
 

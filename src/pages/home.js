@@ -12,15 +12,7 @@ export default {
     },
     bindEvent () {
         $('.js_transition').click(() => {
-            console.log(this);
+            this.$router.push('test', {params: 1});
         });
-    },
-    bindData () {
-
-    },
-    create () {
-        console.log('home created');
-        this.bindEvent();
-        this.open();
     }
 };

@@ -9,11 +9,10 @@ import App from '../app';
 const resolveComponents = (routes) => {
     let components = {};
     routes.map((route) => {
-        let Component = App.extend(...route.component);
-
+        let Component = App.extend(route.component);
         components[getPath(route.path)] = {
             path: route.path,
-            component: new Component(),
+            _component: Component,
             beforeEnter: route.beforeEnter
         };
     });
@@ -23,24 +22,24 @@ const resolveComponents = (routes) => {
 class Router {
     constructor (options) {
         let {path, query, hash} = parsePath(location.href);
-        let routes = resolveComponents(options.routes);
-        Object.assign(this, {path}, {query}, {hash}, {routes});
-
-        this.init();
+        this.options = options;
+        Object.assign(this, {path}, {query}, {hash});
     }
 
     /**
      * 路由替换
      */
-    replace (hash) {
-        window.location.replace(`${this.path}$/#${this.hash}`);
+    replace (hash, query) {
+        let strQuery = stringifyQuery(query);
+        window.location.replace(`${this.path}$/#${this.hash}${strQuery ? `?${strQuery}` : ''}`);
     }
 
     /**
      * 路由push
      */
-    push (hash) {
-        window.location.hash = hash;
+    push (hash, query) {
+        let strQuery = stringifyQuery(query);
+        window.location.hash = `${hash}${strQuery ? `?${strQuery}` : ''}`;
     }
 
     /**
@@ -58,7 +57,7 @@ class Router {
             if (this.route.created) {
                 this.route.component.open();
             } else {
-                this.route.component.create();
+                this.route.component = new this.route._component({router: this});
                 this.route.created = true;
             }
 
@@ -79,9 +78,11 @@ class Router {
      */
     setupListeners () {
         window.addEventListener('hashchange', () => {
-            let {hash} = parsePath(window.location.href);
+            console.log(window.location.href);
+            let {path, hash, query} = parsePath(window.location.href);
+            Object.assign(this, {path}, {query}, {hash});
             this.transitionTo(hash, () => {
-                console.log('hash change complete');
+
             });
         });
     }
@@ -90,6 +91,8 @@ class Router {
      * 初始化
      */
     init () {
+        let routes = resolveComponents(this.options.routes);
+        Object.assign(this, {routes});
         this.setupListeners();
         this.transitionTo(this.hash);
     }
@@ -104,17 +107,14 @@ function install (App) {
     install.installed = true;
 
     App.mixin({
-        create () {
-            console.log('create route mixin create');
-            this._routerRoot = this;
+        beforeCreate () {
             this._router = this.$options.router;
-            this._router.init(this);
         }
     });
 
     Object.defineProperty(App.prototype, '$router', {
         get () {
-            return this._routerRoot._router;
+            return this._router;
         }
     });
 };
