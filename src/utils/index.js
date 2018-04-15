@@ -1,11 +1,3 @@
-const UA = navigator.userAgent.toLowerCase();
-
-// 设置分享
-export const SetShareInfo = ({url, title, description, page, id}) => {
-
-};
-
-
 // 动态加载js
 export const loadJs = (url) => {
     return new Promise((resolve, reject) => {
@@ -52,25 +44,4 @@ export const loadImage = (images) => {
             load(item);
         });
     });
-};
-
-/* eslint-disable */
-// 添加CNZZ时间统计
-export const pushCnzzEvent = (btnName, event) => {
-    _czc.push(['_trackEvent', btnName, event]);
-};
-
-// PV统计
-export const pushPage = (pageName) => {
-    _czc.push(['_trackPageview', pageName]);
-};
-
-// 获取Url查询参数
-export const getUrlQuery =(name) => {
-    let reg = new RegExp(`(^|&)${name}=([^&]*)(&|$)`);
-    let r = window.location.search.substr(1).match(reg);
-    if (r) {
-        return (unescape(r[2]) || '');
-    }
-    return null;
 };

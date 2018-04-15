@@ -14,5 +14,16 @@ export default {
         $('.js_transition').click(() => {
             this.$router.push('test', {params: 1});
         });
+
+        $('.js_replace').click(() => {
+            this.$router.replace('test', {params: 2});
+        });
+        $('.js_router').click(() => {
+            console.log(this.$router.route);
+        });
+
+        $('.js_tip').click(() => {
+            this.$tip({message: '测试提示信息'});
+        });
     }
 };

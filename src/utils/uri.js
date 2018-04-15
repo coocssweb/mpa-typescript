@@ -30,6 +30,8 @@ export const parsePath = (path) => {
         });
     }
 
+    path = hashIndex >= 0 ? (path.slice(0, hashIndex)) : (queryIndex >= 0 ? path.slice(0, queryIndex) : path);
+
     return { path, query, hash: hash || 'default' };
 };
 

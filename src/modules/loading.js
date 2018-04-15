@@ -23,8 +23,7 @@ export default {
     loadOver () {
         $('.line-top, .line-bot, .loading-box').addClass('over');
         setTimeout(() => {
-            $('#loading-mask').fadeOut(500);
-            // $('.js-video').removeClass('hide');
+            this.el.$page.fadeOut(500);
         }, 1000);
     },
     /**
@@ -45,7 +44,7 @@ export default {
         // this.countdown(100);
         let timestamp = new Date().getTime();
         loadImage([
-            'http://mtshop1.meitudata.com/5acc1da926fa912246.jpg',
+            'https://mtshop1.meitudata.com/5acc1da926fa912246.jpg',
             'https://mtshop1.meitudata.com/5acc313dad24954384.png'
         ]).then(() => {
             let timestamp2 = (new Date().getTime() - timestamp);

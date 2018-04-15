@@ -31,7 +31,7 @@ class Router {
      */
     replace (hash, query) {
         let strQuery = stringifyQuery(query);
-        window.location.replace(`${this.path}$/#${this.hash}${strQuery ? `?${strQuery}` : ''}`);
+        window.location.replace(`${this.path}#${hash}${strQuery ? `?${strQuery}` : ''}`);
     }
 
     /**
@@ -78,8 +78,11 @@ class Router {
      */
     setupListeners () {
         window.addEventListener('hashchange', () => {
-            console.log(window.location.href);
             let {path, hash, query} = parsePath(window.location.href);
+            if (hash === this.path) {
+                Object.assign(this, {path}, {query}, {hash});
+                return false;
+            }
             Object.assign(this, {path}, {query}, {hash});
             this.transitionTo(hash, () => {
 

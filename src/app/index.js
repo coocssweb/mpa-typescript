@@ -41,16 +41,23 @@ function initEvents (App) {
     App.prototype.$cnzz = {
         // 事件统计
         event ({dom, event}) {
-
+            /* eslint-disable */
+            _czc.push(['_trackEvent', dom, event]);
         },
         // pv统计
         page ({page}) {
-
+            _czc.push(['_trackPageview', page]);
         }
     };
 
+    App.prototype.$tip = function ({message, type}) {
+        $('.tip').html(message).addClass(type).addClass('show');
+        setTimeout(() => {
+            $('.tip').removeClass('show');
+        }, 2000);
+    };
+
     App.prototype.open = function () {
-        console.log(this.$router.query);
         if (this.el && this.el.$page) {
             this.el.$page.addClass('animating').addClass('open');
             setTimeout(() => {

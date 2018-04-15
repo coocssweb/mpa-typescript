@@ -43,10 +43,6 @@ module.exports = function webpackBaseConfig (NODE_ENV = 'development') {
                     loader: 'ejs-loader'
                 },
                 {
-                    test: /\.php/,
-                    loader: 'ejs-loader'
-                },
-                {
                     test: /\.(png|jpg|gif|svg)$/,
                     loader: 'url-loader',
                     query: {
@@ -89,7 +85,7 @@ module.exports = function webpackBaseConfig (NODE_ENV = 'development') {
             }),
             new HtmlWebpackPlugin({
                 filename: 'index.html',
-                template: path.resolve('./src/index.html'),
+                template: path.resolve('./src/render.js'),
                 chunks: ['index'],
                 hash: false,
                 inject: 'body',
@@ -100,6 +96,11 @@ module.exports = function webpackBaseConfig (NODE_ENV = 'development') {
             }),
             new webpack.ProvidePlugin({
                 $: 'jquery',
+            }),
+            new webpack.DefinePlugin({
+                'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
+                'process.env.API_DOMAIN': JSON.stringify(config.API_DOMAIN),
+                'process.env.ORIGIN_URL': JSON.stringify(config.ORIGIN_URL)
             })
         ]
     };
