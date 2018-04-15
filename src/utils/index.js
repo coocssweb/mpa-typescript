@@ -12,6 +12,7 @@ export const loadJs = (url) => {
             };
         } else {
             script.onload = function () {
+                resolve();
             };
         }
         script.src = url;

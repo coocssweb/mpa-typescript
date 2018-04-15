@@ -11,34 +11,71 @@ class Weixin {
         this.jsSdk = jsSdk;
     }
 
-    set ({link, title, desc, imgUrl}, trigger, success, fail, cancel) {
+    setShare (option, trigger, success, fail, cancel) {
         const PLATS = ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo', 'onMenuShareQZone'];
+        let {link, title, desc, imgUrl} = option || {
+            link: '',
+            title: '',
+            desc: '',
+            imageUrl: ''
+        };
+
+        /* eslint-disable */
         wx.ready(function () {
             PLATS.map((plat) => {
-                /* eslint-disable */
                 wx.onMenuShareTimeline({
                     title,
                     desc,
                     link,
                     imgUrl,
                     trigger: function () {
-                        trigger();
+                        trigger && trigger();
                     },
                     success: function () {
-                        success();
+                        success && success();
                     },
                     fail: function () {
-                        fail();
+                        fail && fail();
                     },
                     cancel: function () {
-                        cancel();
+                        cancel && cancel();
                     }
                 });
             });
         });
     }
 
+    callShare () {
+
+    }
+
+    previewImage (urls, currentIndex) {
+        wx.previewImage({
+            urls,
+            current: urls[currentIndex]
+        });
+    }
+
+    downLoadImage () {
+
+    }
+
+    closeWindow () {
+        wx.closeWindow();
+    }
+
+    chooseWXPay ({timestamp, nonceStr, packageStr, signType, paySign}) {
+        wx.chooseWXPay({
+            timestamp,
+            nonceStr,
+            package: packageStr,
+            signType,
+            paySign
+        });
+    }
+
     config ({timestamp, nonceStr, signature}) {
+        /* eslint-disable */
         wx.config({
             debug: false,
             appId: this.appId,
@@ -68,9 +105,11 @@ class Weixin {
 
     init (config) {
         loadJs (this.jsSdk).then(() => {
+            console.log(wx);
             return $.ajax({
                 url: this.tokenUrl,
-                'get',
+                dataType: 'jsonp',
+                type: 'get',
                 data: {},
                 responseType: 'json',
                 async: true,
@@ -78,29 +117,32 @@ class Weixin {
             }).then(response => {
                 let {timestamp, nonceStr, signature} = response;
                 this.config({timestamp, nonceStr, signature});
-                this.set(config);
+                this.setShare(config);
             });
         });
     }
 }
 
 // install
-function install (App) {
+function install (App, config) {
     if (install.installed) {
         return false;
     }
 
     install.installed = true;
 
-    App.mixin({
-        beforeCreate () {
-            this._weixin = this.$options.weixin;
-        }
-    });
+    let weixin = new Weixin(config);
+
 
     Object.defineProperty(App.prototype, '$weixin', {
         get () {
-            return this._weixin;
+            return weixin;
+        }
+    });
+
+    Object.defineProperty(App.prototype, '_weixin', {
+        get () {
+            return weixin;
         }
     });
 }

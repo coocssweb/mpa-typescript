@@ -93,6 +93,7 @@ function init (App) {
         this.$options = options || this.$options;
         this.beforeCreate();
         this.create();
+        console.log(this);
     };
 };
 
