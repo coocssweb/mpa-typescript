@@ -12,6 +12,12 @@ export default {
     isWechat () {
         return /micromessenger/.test(UA) && !/wxwork/.test(UA);
     },
+    isQQ () {
+        return /qq\//gi.test(UA);
+    },
+    isQZone () {
+        return /qzone\//gi.test(UA);
+    },
     isAndroid () {
         return /android/.test(UA);
     },

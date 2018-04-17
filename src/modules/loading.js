@@ -44,8 +44,7 @@ export default {
         // this.countdown(100);
         let timestamp = new Date().getTime();
         loadImage([
-            'https://mtshop1.meitudata.com/5acc1da926fa912246.jpg',
-            'https://mtshop1.meitudata.com/5acc313dad24954384.png'
+            'https://mtshop1.meitudata.com/5acc1da926fa912246.jpg'
         ]).then(() => {
             let timestamp2 = (new Date().getTime() - timestamp);
             if (timestamp2 > 1000) {

@@ -4,15 +4,15 @@ export const loadJs = (url) => {
         let script = document.createElement('script');
         script.type = 'text/javascript';
         if (script.readyState) {
-            script.onreadystatechange = function () {
+            script.onreadystatechange = function (e) {
                 if (script.readyState === 'loaded' || script.readyState === 'complete') {
                     script.onreadystatechange = null;
-                    resolve();
+                    resolve(e);
                 }
             };
         } else {
-            script.onload = function () {
-                resolve();
+            script.onload = function (e) {
+                resolve(e);
             };
         }
         script.src = url;
