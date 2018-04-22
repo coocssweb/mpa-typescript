@@ -29,7 +29,7 @@ class Router {
     /**
      * 路由替换
      */
-    replace (hash, query) {
+    replace (hash, query = '') {
         let strQuery = stringifyQuery(query);
         window.location.replace(`${this.path}#${hash}${strQuery ? `?${strQuery}` : ''}`);
     }
@@ -37,7 +37,7 @@ class Router {
     /**
      * 路由push
      */
-    push (hash, query) {
+    push (hash, query = '') {
         let strQuery = stringifyQuery(query);
         window.location.hash = `${hash}${strQuery ? `?${strQuery}` : ''}`;
     }

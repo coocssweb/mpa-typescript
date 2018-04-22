@@ -6,3 +6,27 @@
         opacity: 1;
     }
 }
+
+@keyframes slide-up {
+    0%{
+        transform: translateY(100%);
+    }
+    100%{
+        transform: none;
+    }
+}
+
+@keyframes tip-in {
+    0%{
+        transform: translate3d(-50%, 0PX, 0);
+        opacity: 0;
+    }
+    50%{
+        opacity: 1;
+        transform: translate3d(-50%, 10PX, 0);
+    }
+    100%{
+        transform: translate3d(-50%, 10PX, 0);
+        opacity: 1;
+    }
+}

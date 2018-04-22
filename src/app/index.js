@@ -50,11 +50,11 @@ function initEvents (App) {
         }
     };
 
-    App.prototype.$tip = function ({message, type}) {
-        $('.tip').html(message).addClass(type).addClass('show');
+    App.prototype.$tip = function ({message, type, timeout = 2000}) {
+        $('body').append(`<div class="global-tip">${message}</div>`);
         setTimeout(() => {
-            $('.tip').removeClass('show');
-        }, 2000);
+            $('.global-tip').remove();
+        }, timeout);
     };
 
     App.prototype.open = function () {

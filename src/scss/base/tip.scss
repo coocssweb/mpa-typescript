@@ -1,35 +1,16 @@
-.tip{
-    background-color: rgba(255, 255, 255, 1);
-    border-radius: 5px; /*no*/
-    border: 1px solid #f7df99; /*no*/
+.global-tip{
+    background: rgba(17, 17, 17, 0.7);
+    border-radius: 3PX;
     height: 30px;
     line-height: 30px;
-    color: #000;
+    color: #ffffff;
     position: absolute;
-    top: 50%;
+    top: 100px;
     left: 50%;
-    transform: translate3d(-50%, -50%, 0);
+    transform: translate3d(-50%, 0, 0);
     z-index: 2000;
     padding: 15px 40px;
     font-size: 24px;
     white-space: nowrap;
-    display: none;
-    &.show{
-        display: block;
-        animation: tipIn 0.5s ease;
-        @keyframes tipIn {
-            0%{
-                transform: translate3d(-50%, -50%, 0) scale(0.6);
-                opacity: 0;
-            }
-            50%{
-                opacity: 1;
-                transform: translate3d(-50%, -50%, 0) scale(1.1);
-            }
-            100%{
-                transform: translate3d(-50%, -50%, 0) scale(1);
-                opacity: 1;
-            }
-        }
-    }
+    animation: tip-in 0.5s ease forwards;
 }

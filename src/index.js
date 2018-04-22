@@ -17,4 +17,10 @@ this._app._thirdPlat.init({
     imageUrl: 'https://mtshop1.meitudata.com/5ad08f6044d2038412.png'
 });
 
-Loading.init();
+App.use(Loading, {
+    images: ['https://mtshop1.meitudata.com/5a27dbac402a510658.jpg']
+}, () => {
+    console.log('loadOver');
+});
+
+this._app._loading.init();

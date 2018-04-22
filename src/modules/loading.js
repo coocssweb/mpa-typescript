@@ -4,56 +4,72 @@
  */
 import {loadImage} from '../utils';
 
-export default {
-    el: {
-        $countDown: $('.loading_num'),
-        $page: $('.loading'),
-    },
-    data: {
-        percent: 0,
-        hasLoad: false,
-    },
-    close () {
-        this.el.$countDown.html(`100%`);
-        this.el.$page.fadeOut();
-    },
+class Loading {
+    constructor (options, cb) {
+        this.percent = 0;
+        this.images = options.images || [];
+        this.hasLoad = false;
+        this.loadCb = cb;
+        this.$loadingPercent = $('.globalLoading-percent');
+        this.$loadingValue = $('.globalLoading-value');
+    }
+
     /**
-     * 主要图片加载完
+     * 资源加载完成
      */
     loadOver () {
-        $('.line-top, .line-bot, .loading-box').addClass('over');
-        setTimeout(() => {
-            this.el.$page.fadeOut(500);
-        }, 1000);
-    },
+        this.hasLoad = true;
+        $('.globalLoading').fadeOut(300);
+        this.loadCb && this.loadCb();
+    }
+
     /**
      * 倒计时
      */
     countdown (timeout) {
         setTimeout(() => {
-            this.data.percent += this.data.percent > 80 ? (this.data.hasLoad ? 1 : 0) : 1;
-            if (this.data.percent > 99) {
-                this.close();
-            } else {
-                this.el.$countDown.html(`${this.data.percent}%`);
-                this.countdown(this.data.percent < 80 && !this.data.hasLoad ? timeout : 30);
-            }
-        }, timeout);
-    },
-    init () {
-        // this.countdown(100);
-        let timestamp = new Date().getTime();
-        loadImage([
-            'https://mtshop1.meitudata.com/5acc1da926fa912246.jpg'
-        ]).then(() => {
-            let timestamp2 = (new Date().getTime() - timestamp);
-            if (timestamp2 > 1000) {
+            this.percent += this.percent > 80 ? (this.hasLoad ? 1 : 0) : 1;
+            if (this.percent > 99) {
                 this.loadOver();
             } else {
-                setTimeout(() => {
-                    this.loadOver();
-                }, 1000 - timestamp2);
+                this.$loadingValue.html(`${this.percent}%`);
+                this.$loadingPercent.css('width', `${this.percent}%`);
+                this.countdown(this.percent < 80 && !this.hasLoad ? timeout : 30);
             }
+        }, timeout);
+    }
+
+    init () {
+        this.countdown(50);
+        loadImage(this.images).then(() => {
+            this.hasLoad = true;
         });
     }
 };
+
+// install
+function install (App, config, loadOver) {
+    if (install.installed) {
+        return false;
+    }
+
+    install.installed = true;
+
+    let loading = new Loading(config, loadOver);
+
+    Object.defineProperty(App.prototype, '$loading', {
+        get () {
+            return loading;
+        }
+    });
+
+    Object.defineProperty(App.prototype, '_loading', {
+        get () {
+            return loading;
+        }
+    });
+}
+
+Loading.install = install;
+
+export default Loading;

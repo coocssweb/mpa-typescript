@@ -44,5 +44,7 @@ export const loadImage = (images) => {
         images.map((item, index) => {
             load(item);
         });
+
+        images.length === 0 && resolve();
     });
 };

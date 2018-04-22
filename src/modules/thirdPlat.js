@@ -10,9 +10,21 @@ class ThirdPlat {
         this.tokenUrl = tokenUrl;
         this.jsSdk = jsSdk;
         this.tokenType = tokenType;
+        this.shareConfig = {
+            link: '',
+            title: '',
+            desc: '',
+            imageUrl: ''
+        };
+        this.trigger = null;
+        this.success = null;
+        this.fail = null;
+        this.cancel = null;
     }
 
     setShare (option, trigger, success, fail, cancel) {
+        this.shareConfig = option;
+
         if (!Is.isWechat() && !Is.isQQ() && !Is.isQZone()) {
             return false;
         }
@@ -57,7 +69,29 @@ class ThirdPlat {
     }
 
     callShare () {
-        $('body').append(`<div class="global-share"></div>`);
+        if (Is.isWeibo() || Is.isQZone() || Is.isWechat() || Is.isWeibo()) {
+            $('body').append(`<div class="globalShare globalShare——social"></div>`);
+            return false;
+        }
+
+        $('body').append(`<div class="globalShare globalShare——browser"></div><div class="globalShare-content">
+                <div class="globalShare-title"># 分享到 #</div>
+                <div class="globalShare-list">
+                    <a class="globalShare-item" target="_share" href="${encodeURI(`http://v.t.sina.com.cn/share/share.php?url=${this.shareConfig.link}&title=${this.shareConfig.title}&description=${this.shareConfig.desc}&charset=utf-8&pic=${this.shareConfig.imageUrl}`)}&searchPic=true" class="globalShare-item globalShare-item">
+                        <span class="globalShare-icon globalShare-icon——weibo"></span>
+                        <span class="globalShare-name">微博</span>
+                    </a>
+                    <a class="globalShare-item" target="_share" href="${encodeURI(`http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=${this.shareConfig.link}&title=${this.shareConfig.title}&desc=${this.shareConfig.desc}&charset=utf-8&pics=${this.shareConfig.imageUrl}&site=${this.shareConfig.link}&otype=share`)}" class="globalShare-item globalShare-item">
+                        <span class="globalShare-icon globalShare-icon——qqzone"></span>
+                        <span class="globalShare-name">QQ空间</span>
+                    </a>
+                    <a class="globalShare-item" target="_share" href="${encodeURI(`http://widget.renren.com/dialog/share?resourceUrl=${this.shareConfig.link}&title=${this.shareConfig.title}&description=${this.shareConfig.desc}&charset=utf-8&pic=${this.shareConfig.imageUrl}`)}" class="globalShare-item globalShare-item">
+                        <span class="globalShare-icon globalShare-icon——renren"></span>
+                        <span class="globalShare-name">人人网</span>
+                    </a>
+                </div>
+                <a href="javascript:;" class="globalShare-cancel">取消</a>
+            </div>`);
     }
 
     previewImage (urls, currentIndex) {
@@ -111,14 +145,27 @@ class ThirdPlat {
     }
 
     bindEvent () {
-        $('body').on('click', '.global-share', () => {
-            $('.global-share').remove();
+        $('body').on('click', '.globalShare, .globalShare-cancel', () => {
+            $('.globalShare').remove();
+            $('.globalShare-content').remove();
+
+            if (Is.isWeibo()) {
+                this.success && this.success();
+            } else {
+                this.cancel && this.cancel();
+            }
+        });
+
+        $('body').on('click', '.globalShare-item', () => {
+            $('.globalShare').remove();
+            $('.globalShare-content').remove();
+            this.success && this.success();
         });
     }
 
     init (config) {
         this.bindEvent();
-        
+
         if (!Is.isWechat() && !Is.isQQ() && !Is.isQZone()) {
             return false;
         }
