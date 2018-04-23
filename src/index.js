@@ -5,7 +5,8 @@ import ThirdPlat from './modules/ThirdPlat';
 import Loading from './modules/loading';
 
 App.use(ThirdPlat, {
-    tokenUrl: `${location.protocol}//applet.meitu.com/public/index/wx_token`, tokenType: 'jsonp'
+    tokenUrl: ``,               // 须由服务端配合开发，格式如：{"appId":"x","nonceStr":"x","timestamp":123,"jsapi_ticket":"x-","signature":"xx"}
+    tokenType: 'jsonp'          // jsonp / json 都行、具体看你们的信息
 });
 
 this._app = new App({router});
@@ -13,7 +14,7 @@ this._app._router.init();
 this._app._thirdPlat.init({
     title: '默认分享标题',
     desc: '默认分享文案',
-    link: 'http://f2er.meitu.com',
+    link: 'https://www.meitu.com',
     imageUrl: 'https://mtshop1.meitudata.com/5ad08f6044d2038412.png'
 });
 

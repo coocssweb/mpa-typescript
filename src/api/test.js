@@ -3,7 +3,7 @@ import Base from './base';
 
 class Test extends Base {
     test (id) {
-        let url = `${API_URL}/idols/like.json`;
+        let url = `${API_URL}/test/like.json`;
         let data = {id: id};
         return this.request({url, data, type: 'get'});
     }
