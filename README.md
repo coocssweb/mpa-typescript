@@ -50,3 +50,6 @@ Modern browsers and Internet Explorer 8+.
 ## LICENSE
 
 **MIT**
+
+## AND
+Thank you for use my code
