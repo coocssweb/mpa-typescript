@@ -8,7 +8,7 @@ a simple H5 scaffolding
 npm install -g @coocss/cli
 
 # 创建项目
-coocss crate html5
+coocss create html5
 
 # 安装依赖
 npm install
