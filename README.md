@@ -35,8 +35,8 @@ npm start
 ## Todo List
 - 添加一些比较通用的动画
 - 写一个手势插件
--
--
+- 完善好文档
+- 建议一个demo，在github.io下
 -
 -
 -
