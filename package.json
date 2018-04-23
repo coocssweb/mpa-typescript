@@ -1,14 +1,14 @@
 {
-  "name": "h5-cli",
+  "name": "html5-cli",
   "version": "1.0.0",
-  "description": "",
+  "description": "a simple h5 cli",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --config ./build/webpack.dev.config.js --open --hot",
     "build": "webpack -p --config ./build/webpack.product.config.js --progress --hide-modules",
     "build:test": "webpack -p --config ./build/webpack.test.config.js --progress --hide-modules"
   },
-  "author": "",
+  "author": "coocss",
   "license": "ISC",
   "devDependencies": {
     "autoprefixer": "^6.4.0",
