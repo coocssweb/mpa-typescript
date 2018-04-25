@@ -4,6 +4,7 @@
  */
 import {loadJs} from '../utils';
 import Is from '../utils/is';
+import {formatShareUrl} from '../utils/uri';
 
 class ThirdPlat {
     constructor ({tokenUrl, tokenType = 'json', jsSdk = '//res.wx.qq.com/open/js/jweixin-1.2.0.js'}) {
@@ -45,7 +46,7 @@ class ThirdPlat {
                 wx[plat]({
                     title,
                     desc,
-                    link,
+                    link: formatShareUrl(link),
                     imgUrl,
                     trigger: function (e) {
                         trigger && trigger();

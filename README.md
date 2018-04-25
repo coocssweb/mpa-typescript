@@ -42,6 +42,13 @@ npm start
 -
 - ......
 
+
+## 04.25 Update List
+- 格式化URL ，如test/?param=1#hash => test/#hash?param=1
+- 修复微信分享image错误
+- 支持重新beforeCreate、open、close、create等方法
+- ......
+
 ## Support
 
 Modern browsers and Internet Explorer 8+.

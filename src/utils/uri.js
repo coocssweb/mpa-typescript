@@ -44,3 +44,12 @@ export const stringifyQuery = (query) => {
 
     return res.join('&');
 };
+
+// 格式化分享Url
+export const formatShareUrl = (url) => {
+    let [origin, tHash] = url.split('#');
+    let [hash, queryStr] = (tHash || '').split('?');
+
+    // #hash?id=1 ==> ?id=1#hash
+    return `${origin}${queryStr ? `?${queryStr}` : ''}${hash ? `#${hash}` : ''}`;
+};
