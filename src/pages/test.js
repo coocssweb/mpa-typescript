@@ -10,6 +10,9 @@ export default {
     data: {
 
     },
+    open () {
+        console.log('open');
+    },
     bindEvent () {
 
     },

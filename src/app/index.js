@@ -3,7 +3,9 @@
  * Created by 王佳欣 on 2018/4/14.
  */
 
-function _extend (destination, source) {
+const LIFE_CIRCLE = ['beforeCreate', 'create', 'close', 'open'];
+
+function _mixin (destination, source) {
     for (let key in source) {
         if (source.hasOwnProperty(key)) {
             destination[key] = source[key];
@@ -12,9 +14,26 @@ function _extend (destination, source) {
     return destination;
 }
 
+function _combine (destination, source) {
+    for (let key in source) {
+        if (source.hasOwnProperty(key)) {
+            if (LIFE_CIRCLE.indexOf(key) > -1) {
+                let temp = [destination[key], source[key]];
+                destination[key] = function () {
+                    temp[0].call(source);
+                    temp[1].call(source);
+                };
+            } else {
+                destination[key] = source[key];
+            }
+        }
+    }
+    return destination;
+}
+
 function App (options) {
     this._init(options);
-};
+}
 
 function initEvents (App) {
     // 分享信息
@@ -80,6 +99,7 @@ function initEvents (App) {
     };
 
     App.prototype.create = function () {
+        this.beforeCreate();
         if (this.bindEvent) {
             this.bindEvent();
         }
@@ -93,7 +113,6 @@ function init (App) {
         this.$options = options || this.$options;
         this.beforeCreate();
         this.create();
-        console.log(this);
     };
 };
 
@@ -126,7 +145,7 @@ function initExtend (App) {
         Sub.prototype = Object.create(Super.prototype);
         Sub.prototype.constructor = Sub;
 
-        _extend(
+        _combine(
             Sub.prototype,
             extendOptions
         );
@@ -138,7 +157,7 @@ function initExtend (App) {
 
 function initMixin (App) {
     App.mixin = function (mixin) {
-        _extend(
+        _mixin(
             App.prototype,
             mixin
         );
