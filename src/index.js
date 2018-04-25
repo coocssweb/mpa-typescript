@@ -15,7 +15,7 @@ this._app._thirdPlat.init({
     title: '默认分享标题',
     desc: '默认分享文案',
     link: 'https://www.meitu.com',
-    imageUrl: 'https://mtshop1.meitudata.com/5ad08f6044d2038412.png'
+    imgUrl: 'https://mtshop1.meitudata.com/5ad08f6044d2038412.png'
 });
 
 App.use(Loading, {

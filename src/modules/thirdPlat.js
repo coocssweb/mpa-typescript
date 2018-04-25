@@ -14,7 +14,7 @@ class ThirdPlat {
             link: '',
             title: '',
             desc: '',
-            imageUrl: ''
+            imgUrl: ''
         };
         this.trigger = null;
         this.success = null;
@@ -34,7 +34,7 @@ class ThirdPlat {
             link: '',
             title: '',
             desc: '',
-            imageUrl: ''
+            imgUrl: ''
         };
         /* eslint-disable */
         wx.error(function (error) {
@@ -48,19 +48,15 @@ class ThirdPlat {
                     link,
                     imgUrl,
                     trigger: function (e) {
-                        console.log(e);
                         trigger && trigger();
                     },
                     success: function (e) {
-                        console.log(e);
                         success && success();
                     },
                     fail: function () {
-                        console.log(e);
                         fail && fail();
                     },
                     cancel: function () {
-                        console.log(e);
                         cancel && cancel();
                     }
                 });

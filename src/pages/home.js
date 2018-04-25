@@ -30,7 +30,7 @@ export default {
             this.$thirdPlat.setShare({
                 title: '头号玩家 Ready Player One',
                 desc: '在2045年，现实世界衰退破败，人们沉迷于VR(虚拟现实)游戏“绿洲(OASIS)”的虚幻世界里寻求慰藉。',
-                imageUrl: 'https://img3.doubanio.com/view/photo/m/public/p2517122395.jpg',
+                imgUrl: 'https://img3.doubanio.com/view/photo/m/public/p2517122395.jpg',
                 link: 'https://movie.douban.com/subject/4920389/',
                 success: () => {
                     console.log('success share');
