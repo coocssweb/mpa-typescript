@@ -74,15 +74,27 @@ class ThirdPlat {
         $('body').append(`<div class="globalShare globalShare——browser"></div><div class="globalShare-content">
                 <div class="globalShare-title"># 分享到 #</div>
                 <div class="globalShare-list">
-                    <a class="globalShare-item" target="_share" href="${encodeURI(`http://v.t.sina.com.cn/share/share.php?url=${this.shareConfig.link}&title=${this.shareConfig.title}&description=${this.shareConfig.desc}&charset=utf-8&pic=${this.shareConfig.imageUrl}`)}&searchPic=true" class="globalShare-item globalShare-item">
+                    <a 
+                        class="globalShare-item" 
+                        target="_share" 
+                        href="${encodeURI(`http://v.t.sina.com.cn/share/share.php?url=${this.shareConfig.link}&title=${this.shareConfig.title}&description=${this.shareConfig.desc}&charset=utf-8&pic=${this.shareConfig.imageUrl}`)}&searchPic=true" 
+                        class="globalShare-item globalShare-item">
                         <span class="globalShare-icon globalShare-icon——weibo"></span>
                         <span class="globalShare-name">微博</span>
                     </a>
-                    <a class="globalShare-item" target="_share" href="${encodeURI(`http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=${this.shareConfig.link}&title=${this.shareConfig.title}&desc=${this.shareConfig.desc}&charset=utf-8&pics=${this.shareConfig.imageUrl}&site=${this.shareConfig.link}&otype=share`)}" class="globalShare-item globalShare-item">
+                    <a 
+                        class="globalShare-item" 
+                        target="_share" 
+                        href="${encodeURI(`http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=${this.shareConfig.link}&title=${this.shareConfig.title}&desc=${this.shareConfig.desc}&charset=utf-8&pics=${this.shareConfig.imageUrl}&site=${this.shareConfig.link}&otype=share`)}" 
+                        class="globalShare-item globalShare-item">
                         <span class="globalShare-icon globalShare-icon——qqzone"></span>
                         <span class="globalShare-name">QQ空间</span>
                     </a>
-                    <a class="globalShare-item" target="_share" href="${encodeURI(`http://widget.renren.com/dialog/share?resourceUrl=${this.shareConfig.link}&title=${this.shareConfig.title}&description=${this.shareConfig.desc}&charset=utf-8&pic=${this.shareConfig.imageUrl}`)}" class="globalShare-item globalShare-item">
+                    <a 
+                        class="globalShare-item" 
+                        target="_share" 
+                        href="${encodeURI(`http://widget.renren.com/dialog/share?resourceUrl=${this.shareConfig.link}&title=${this.shareConfig.title}&description=${this.shareConfig.desc}&charset=utf-8&pic=${this.shareConfig.imageUrl}`)}" 
+                        class="globalShare-item globalShare-item">
                         <span class="globalShare-icon globalShare-icon——renren"></span>
                         <span class="globalShare-name">人人网</span>
                     </a>
@@ -143,14 +155,14 @@ class ThirdPlat {
 
     bindEvent () {
         $('body').on('click', '.globalShare, .globalShare-cancel', () => {
-            $('.globalShare').remove();
-            $('.globalShare-content').remove();
+            $('.globalShare').addClass('out').on('animationend webkitAnimationEnd oAnimationEnd', function () {
+                $(this).remove();
+            });
+            $('.globalShare-content').addClass('out').on('animationend webkitAnimationEnd oAnimationEnd', function () {
+                $(this).remove();
+            });
 
-            if (Is.isWeibo()) {
-                this.success && this.success();
-            } else {
-                this.cancel && this.cancel();
-            }
+            this.cancel && this.cancel();
         });
 
         $('body').on('click', '.globalShare-item', () => {

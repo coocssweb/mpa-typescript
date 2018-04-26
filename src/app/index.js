@@ -72,25 +72,31 @@ function initEvents (App) {
     App.prototype.$tip = function ({message, type, timeout = 2000}) {
         $('body').append(`<div class="global-tip">${message}</div>`);
         setTimeout(() => {
-            $('.global-tip').remove();
+            $('.global-tip').addClass('out').on('animationend webkitAnimationEnd oAnimationEnd', function () {
+                $(this).remove();
+            });
         }, timeout);
     };
 
     App.prototype.open = function () {
         if (this.el && this.el.$page) {
-            this.el.$page.addClass('animating').addClass('open');
-            setTimeout(() => {
-                this.el.$page.addClass('show').removeClass('animating').removeClass('open');
-            }, 500);
+            this.el.$page
+                .addClass('animating')
+                .addClass('open')
+                .on('animationend webkitAnimationEnd oAnimationEnd', function () {
+                    $(this).addClass('show').removeClass('animating').removeClass('open');
+                });
         }
     };
 
     App.prototype.close = function () {
         if (this.el && this.el.$page) {
-            this.el.$page.addClass('animating').addClass('close');
-            setTimeout(() => {
-                this.el.$page.removeClass('show').removeClass('animating').removeClass('close');
-            }, 500);
+            this.el.$page
+                .addClass('animating')
+                .addClass('close')
+                .on('animationend webkitAnimationEnd oAnimationEnd', function () {
+                    $(this).removeClass('show').removeClass('animating').removeClass('close');
+                });
         }
     };
 
