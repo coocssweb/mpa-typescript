@@ -23,5 +23,8 @@ export default {
     },
     isIos () {
         return /iphone|ipad|ipod/.test(UA);
+    },
+    isMeituApp () {
+        return /com\.(meitu|commsource)\./.test(UA);
     }
 };

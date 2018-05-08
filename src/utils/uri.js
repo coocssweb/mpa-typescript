@@ -10,27 +10,22 @@ export const getPath = (path) => {
 export const parsePath = (path) => {
     let hash = '';
     let queryStr = '';
+    let queryArr = [];
     let query = {};
-    const hashIndex = path.indexOf('#');
-    const queryIndex = path.indexOf('?');
-    if (hashIndex >= 0) {
-        hash = path.slice(hashIndex + 1, queryIndex >= 0 ? queryIndex : path.length);
-    }
 
-    if (queryIndex >= 0) {
-        queryStr = path.slice(queryIndex + 1);
-    }
+    const pathStr = document.location.origin + document.location.pathname;
 
-    if (queryStr) {
-        queryStr.split('&').map((item) => {
+    hash = location.hash ? location.hash.split(/&|\?|#/)[1] : '';
+
+    location.href.split(/&|\?|#/).map((item) => {
+        if (item.indexOf('=') > -1) {
             let values = item.split('=');
-            if (values[0]) {
-                query[values[0]] = values.length > 1 ? values[1] : '';
-            }
-        });
-    }
-
-    path = hashIndex >= 0 ? (path.slice(0, hashIndex)) : (queryIndex >= 0 ? path.slice(0, queryIndex) : path);
+            query[values[0]] = values[1];
+            queryArr.push(item);
+        }
+    });
+    queryStr = queryArr.join('&');
+    path = hash ? (queryStr ? (`${pathStr}#${hash}?${queryStr}`) : (`${pathStr}#${hash}`)) : pathStr;
 
     return { path, query, hash: hash || 'default' };
 };

@@ -7,9 +7,11 @@ import Is from '../utils/is';
 import {formatShareUrl} from '../utils/uri';
 
 class ThirdPlat {
-    constructor ({tokenUrl, tokenType = 'json', jsSdk = '//res.wx.qq.com/open/js/jweixin-1.2.0.js'}) {
+    constructor ({tokenUrl, tokenType = 'json', jsSdk = '//res.wx.qq.com/open/js/jweixin-1.2.0.js',
+        qqapi = '//open.mobile.qq.com/sdk/qqapi.js?_bid=152'}) {
         this.tokenUrl = tokenUrl;
         this.jsSdk = jsSdk;
+        this.qqapi = qqapi;
         this.tokenType = tokenType;
         this.shareConfig = {
             link: '',
@@ -26,17 +28,29 @@ class ThirdPlat {
     setShare (option, trigger, success, fail, cancel) {
         this.shareConfig = option;
 
-        if (!Is.isWechat() && !Is.isQQ() && !Is.isQZone()) {
-            return false;
-        }
-
-        const PLATS = ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo', 'onMenuShareQZone'];
         let {link, title, desc, imgUrl} = option || {
             link: '',
             title: '',
             desc: '',
             imgUrl: ''
         };
+
+        if (Is.isMeituApp()) {
+            this._initMeitu(option);
+            return false;
+        }
+
+        if (Is.isQQ()) {
+            this._initQQ(option);
+            return false;
+        }
+
+        if (!Is.isWechat() && !Is.isQZone()) {
+            return false;
+        }
+
+        const PLATS = ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo', 'onMenuShareQZone'];
+
         /* eslint-disable */
         wx.error(function (error) {
             console.log(error);
@@ -66,6 +80,10 @@ class ThirdPlat {
     }
 
     callShare () {
+        if (Is.isMeituApp()) {
+            window.MTJs.callSharePageInfo();
+            return false;
+        }
         if (Is.isWeibo() || Is.isQZone() || Is.isWechat() || Is.isWeibo()) {
             $('body').append(`<div class="globalShare globalShare——social"></div>`);
             return false;
@@ -171,14 +189,49 @@ class ThirdPlat {
             this.success && this.success();
         });
     }
+    _initMeitu(option, trigger, success, fail, cancel) {
+        window.addEventListener('WebviewJsBridgeReady', function() {
+            window.MTJs.onSharePageInfo({
+                title: option.title || '', // 选填
+                image: option.imgUrl || '', // 选填 [img_url 兼容美拍旧代码]
+                description: option.desc || '', // 选填 [content 兼容美拍旧代码] (android下的分享是没法将description分享出去，所以可以该值可同title)
+                link: option.link || '', // 选填 [url 兼容美拍旧代码]
+                success: function () {
+                    success && success();
+                }
+            });
+        }, false);
+    }
+    _initQQ (data, trigger, success, fail, cancel) {
+        var info = {title: data.title, desc: data.desc, share_url: data.link, image_url: data.imgUrl};
 
-    init (config) {
-        this.bindEvent();
-
-        if (!Is.isWechat() && !Is.isQQ() && !Is.isQZone()) {
-            return false;
+        function doQQShare() {
+            try {
+                if (data.callback) {
+                    window.mqq.ui.setOnShareHandler(function(type) {
+                        info.share_type = type;
+                        info.back = true;
+                        window.mqq.ui.shareMessage(info, function(result) {
+                            if (result.retCode === 0) {
+                                data.callback && data.callback.call(this, result);
+                            }
+                        });
+                    });
+                } else {
+                    window.mqq.data.setShareInfo(info);
+                }
+            } catch (e) {
+            }
         }
-
+        if (window.mqq) {
+            doQQShare();
+        } else {
+            loadJs (this.qqapi).then(() => {
+                doQQShare();
+            });
+        }
+    }
+   _initWechat (config) {
         loadJs (this.jsSdk).then(() => {
             window.wx = wx;
             return $.ajax({
@@ -198,6 +251,12 @@ class ThirdPlat {
                 this.setShare(config);
             });
         });
+    }
+    init (config) {
+        this.bindEvent();
+        Is.isWechat() && this._initWechat(config);
+        Is.isMeituApp() && this._initMeitu(config);
+        Is.isQQ() && this._initQQ(config);
     }
 }
 
