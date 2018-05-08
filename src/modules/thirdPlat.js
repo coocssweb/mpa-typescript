@@ -8,10 +8,10 @@ import {formatShareUrl} from '../utils/uri';
 
 class ThirdPlat {
     constructor ({tokenUrl, tokenType = 'json', jsSdk = '//res.wx.qq.com/open/js/jweixin-1.2.0.js',
-        qqapi = '//open.mobile.qq.com/sdk/qqapi.js?_bid=152'}) {
+        qqId}) {
         this.tokenUrl = tokenUrl;
         this.jsSdk = jsSdk;
-        this.qqapi = qqapi;
+        this.qqapi = `//open.mobile.qq.com/sdk/qqapi.js?_bid=${qqId}`;
         this.tokenType = tokenType;
         this.shareConfig = {
             link: '',
@@ -25,66 +25,19 @@ class ThirdPlat {
         this.cancel = null;
     }
 
-    setShare (option, trigger, success, fail, cancel) {
-        this.shareConfig = option;
-
-        let {link, title, desc, imgUrl} = option || {
-            link: '',
-            title: '',
-            desc: '',
-            imgUrl: ''
-        };
-
-        if (Is.isMeituApp()) {
-            this._initMeitu(option);
-            return false;
-        }
-
-        if (Is.isQQ()) {
-            this._initQQ(option);
-            return false;
-        }
-
-        if (!Is.isWechat() && !Is.isQZone()) {
-            return false;
-        }
-
-        const PLATS = ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo', 'onMenuShareQZone'];
-
-        /* eslint-disable */
-        wx.error(function (error) {
-            console.log(error);
-        });
-        wx.ready(function () {
-            PLATS.map((plat) => {
-                wx[plat]({
-                    title,
-                    desc,
-                    link: formatShareUrl(link),
-                    imgUrl,
-                    trigger: function (e) {
-                        trigger && trigger();
-                    },
-                    success: function (e) {
-                        success && success();
-                    },
-                    fail: function () {
-                        fail && fail();
-                    },
-                    cancel: function () {
-                        cancel && cancel();
-                    }
-                });
-            });
-        });
-    }
-
     callShare () {
         if (Is.isMeituApp()) {
             window.MTJs.callSharePageInfo();
             return false;
         }
-        if (Is.isWeibo() || Is.isQZone() || Is.isWechat() || Is.isWeibo()) {
+
+        // 微信调用分享
+        if (Is.isQZone() || Is.isQQ) {
+            window._mqq.ui.showShareMenu();
+            return false;
+        }
+
+        if (Is.isWeibo() || Is.isWechat()) {
             $('body').append(`<div class="globalShare globalShare——social"></div>`);
             return false;
         }
@@ -171,7 +124,14 @@ class ThirdPlat {
         });
     }
 
-    bindEvent () {
+    _bindEvent () {
+        if (window._bind) {
+            return false;
+        }
+
+        /* eslint-disable */
+        window._bind = true;
+
         $('body').on('click', '.globalShare, .globalShare-cancel', () => {
             $('.globalShare').addClass('out').on('animationend webkitAnimationEnd oAnimationEnd', function () {
                 $(this).remove();
@@ -189,51 +149,108 @@ class ThirdPlat {
             this.success && this.success();
         });
     }
-    _initMeitu(option, trigger, success, fail, cancel) {
-        window.addEventListener('WebviewJsBridgeReady', function() {
+
+    _initMeitu() {
+        let {title, desc, link, imgUrl} = this.shareConfig;
+        window.addEventListener('WebviewJsBridgeReady', () => {
             window.MTJs.onSharePageInfo({
-                title: option.title || '', // 选填
-                image: option.imgUrl || '', // 选填 [img_url 兼容美拍旧代码]
-                description: option.desc || '', // 选填 [content 兼容美拍旧代码] (android下的分享是没法将description分享出去，所以可以该值可同title)
-                link: option.link || '', // 选填 [url 兼容美拍旧代码]
+                title: title ,
+                image: imgUrl,
+                description: desc,
+                link: link,
                 success: function () {
-                    success && success();
+                    this.success && this.success();
                 }
             });
         }, false);
     }
-    _initQQ (data, trigger, success, fail, cancel) {
-        var info = {title: data.title, desc: data.desc, share_url: data.link, image_url: data.imgUrl};
 
-        function doQQShare() {
-            try {
-                if (data.callback) {
-                    window.mqq.ui.setOnShareHandler(function(type) {
-                        info.share_type = type;
-                        info.back = true;
-                        window.mqq.ui.shareMessage(info, function(result) {
-                            if (result.retCode === 0) {
-                                data.callback && data.callback.call(this, result);
-                            }
-                        });
+    _initQQ () {
+        const setQQShare = () => {
+            let {title, desc, link, imgUrl} = this.shareConfig;
+
+            if (this.success) {
+                window._mqq.ui.setOnShareHandler((type) => {
+                    title = type === 3 ?  desc : title;
+                    window._mqq.ui.shareMessage({
+                        title,
+                        desc,
+                        share_type: type,
+                        share_url: link,
+                        image_url: imgUrl,
+                        back: true
+                    }, (result) => {
+                        if (result.retCode === 0) {
+                            this.success();
+                        } else if (result.retCode === 1) {
+                            this.fail();
+                        }
                     });
-                } else {
-                    window.mqq.data.setShareInfo(info);
-                }
-            } catch (e) {
+                });
+            } else {
+                window._mqq.data.setShareInfo({
+                    title,
+                    desc,
+                    share_url: link,
+                    image_url: imgUrl,
+                });
             }
+        };
+
+        if (window._mqq) {
+            setQQShare();
+            return false;
         }
-        if (window.mqq) {
-            doQQShare();
-        } else {
-            loadJs (this.qqapi).then(() => {
-                doQQShare();
-            });
-        }
+
+        loadJs (this.qqapi).then(() => {
+            window._mqq = mqq;
+            setQQShare();
+        });
     }
-   _initWechat (config) {
+
+   _initWechat () {
+        const setWechatShare = () => {
+            const PLATS = ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo', 'onMenuShareQZone'];
+
+            /* eslint-disable */
+            window._wx.error(function (error) {
+                console.log(error);
+            });
+
+            let {title, desc, link, imgUrl} = this.shareConfig;
+
+            window._wx.ready(function () {
+                PLATS.map((plat) => {
+                    window._wx[plat]({
+                        title,
+                        desc,
+                        link: formatShareUrl(link),
+                        imgUrl,
+                        trigger: function (e) {
+                            this.trigger && this.trigger();
+                        },
+                        success: function (e) {
+                            this.success && this.success();
+                        },
+                        fail: function () {
+                            this.fail && this.fail();
+                        },
+                        cancel: function () {
+                            this.cancel && this.cancel();
+                        }
+                    });
+                });
+            });
+        };
+
+        if (window._wx) {
+            setWechatShare();
+            return false;
+        }
+
+        // 加载微信JsSdk
         loadJs (this.jsSdk).then(() => {
-            window.wx = wx;
+            window._wx = wx;
             return $.ajax({
                 url: this.tokenUrl,
                 dataType: this.tokenType,
@@ -248,15 +265,28 @@ class ThirdPlat {
             }).then(response => {
                 let {appId, timestamp, nonceStr, signature} = response;
                 this.config({appId, timestamp, nonceStr, signature});
-                this.setShare(config);
+                setWechatShare();
             });
         });
     }
+
     init (config) {
-        this.bindEvent();
-        Is.isWechat() && this._initWechat(config);
-        Is.isMeituApp() && this._initMeitu(config);
-        Is.isQQ() && this._initQQ(config);
+        this._bindEvent();
+        this.shareConfig = {
+            link: config.link || '',
+            title: config.title || '',
+            desc: config.desc || '',
+            imgUrl: config.imgUrl || ''
+        };
+
+        this.trigger = config.trigger;
+        this.success = config.success;
+        this.fail = config.fail;
+        this.cancel = config.cancel;
+
+        Is.isMeituApp() && this._initMeitu();
+        Is.isWechat() && this._initWechat();
+        Is.isQQ() && this._initQQ();
     }
 }
 

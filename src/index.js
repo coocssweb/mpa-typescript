@@ -6,6 +6,7 @@ import Loading from './modules/loading';
 
 App.use(ThirdPlat, {
     tokenUrl: ``,               // 须由服务端配合开发，格式如：{"appId":"x","nonceStr":"x","timestamp":123,"jsapi_ticket":"x-","signature":"xx"}
+    qqAId: '',                  //  QQ id
     tokenType: 'jsonp'          // jsonp / json 都行、具体看你们的信息
 });
 
