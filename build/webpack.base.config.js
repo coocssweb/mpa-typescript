@@ -10,6 +10,7 @@ module.exports = function webpackBaseConfig (NODE_ENV = 'development') {
     const webpackConfig = {
         entry: {
             index: resolve('src', 'index.js'),
+            callback: resolve('src', 'callback.js'),
         },
         output: {
             path: resolve(''),
@@ -94,13 +95,27 @@ module.exports = function webpackBaseConfig (NODE_ENV = 'development') {
                     removeComments: true,
                 }
             }),
+            new HtmlWebpackPlugin({
+                filename: 'callback.html',
+                template: path.resolve('./src/template/callback.html'),
+                chunks: ['callback'],
+                hash: false,
+                inject: 'body',
+                xhtml: true,
+                minify: {
+                    removeComments: true,
+                }
+            }),
             new webpack.ProvidePlugin({
                 $: 'jquery',
             }),
             new webpack.DefinePlugin({
                 'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
                 'process.env.API_DOMAIN': JSON.stringify(config.API_DOMAIN),
-                'process.env.ORIGIN_URL': JSON.stringify(config.ORIGIN_URL)
+                'process.env.ORIGIN_URL': JSON.stringify(config.ORIGIN_URL),
+                'process.env.ACCOUNT_URL': JSON.stringify(config.ACCOUNT_URL),
+                'process.env.ACCOUNT_JS_SDK': JSON.stringify(config.ACCOUNT_JS_SDK),
+                'process.env.MT_ACCOUNT': config.MT_ACCOUNT
             })
         ]
     };

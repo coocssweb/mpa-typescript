@@ -12,7 +12,7 @@ App.use(ThirdPlat, {
 
 this._app = new App({router});
 this._app._router.init();
-this._app._thirdPlat.init({
+this._app._thirdPlat.setShare({
     title: '默认分享标题',
     desc: '默认分享文案',
     link: 'http://h4.meitu.com',

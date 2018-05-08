@@ -30,9 +30,8 @@ class ThirdPlat {
             window.MTJs.callSharePageInfo();
             return false;
         }
-
         // 微信调用分享
-        if (Is.isQZone() || Is.isQQ) {
+        if (Is.isQZone() || Is.isQQ()) {
             window._mqq.ui.showShareMenu();
             return false;
         }
@@ -75,7 +74,7 @@ class ThirdPlat {
     }
 
     previewImage (urls, currentIndex) {
-        wx.previewImage({
+        window._wx.previewImage({
             urls,
             current: urls[currentIndex]
         });
@@ -86,11 +85,11 @@ class ThirdPlat {
     }
 
     closeWindow () {
-        wx.closeWindow();
+        window._wx.closeWindow();
     }
 
     chooseWXPay ({timestamp, nonceStr, packageStr, signType, paySign}) {
-        wx.chooseWXPay({
+        window._wx.chooseWXPay({
             timestamp,
             nonceStr,
             package: packageStr,
@@ -101,7 +100,7 @@ class ThirdPlat {
 
     config ({appId, timestamp, nonceStr, signature}) {
         /* eslint-disable */
-        wx.config({
+        window._wx.config({
             debug: false,
             appId,
             timestamp,
@@ -270,7 +269,7 @@ class ThirdPlat {
         });
     }
 
-    init (config) {
+    setShare (config) {
         this._bindEvent();
         this.shareConfig = {
             link: config.link || '',
