@@ -63,3 +63,27 @@
         opacity: 0;
     }
 }
+
+@keyframes flip-in-y {
+    0%{
+        transform: translateY(-150PX);
+        opacity: 0;
+    }
+
+    100%{
+        transform: none;
+        opacity: 1;
+    }
+}
+
+@keyframes flip-out-y {
+    0%{
+        transform: none;
+        opacity: 1;
+    }
+
+    100%{
+        transform: translateX(-150PX);
+        opacity: 0;
+    }
+}

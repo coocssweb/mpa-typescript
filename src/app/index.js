@@ -16,18 +16,17 @@ function _mixin (destination, source) {
 
 function _combine (destination, source) {
     for (let key in source) {
-        if (source.hasOwnProperty(key)) {
-            if (LIFE_CIRCLE.indexOf(key) > -1) {
-                let temp = [destination[key], source[key]];
-                destination[key] = function () {
-                    temp[0].call(source);
-                    temp[1].call(source);
-                };
-            } else {
-                destination[key] = source[key];
-            }
+        if (source.hasOwnProperty(key) && LIFE_CIRCLE.indexOf(key) === -1) {
+            destination.prototype[key] = source[key];
         }
     }
+
+    LIFE_CIRCLE.map((key) => {
+        if (source.hasOwnProperty(key)) {
+            destination.prototype[key] = [destination.prototype[key], source[key]];
+        }
+    });
+
     return destination;
 }
 
@@ -105,7 +104,6 @@ function initEvents (App) {
     };
 
     App.prototype.create = function () {
-        this.beforeCreate();
         if (this.bindEvent) {
             this.bindEvent();
         }
@@ -145,6 +143,16 @@ function initExtend (App) {
         const Super = this;
 
         const Sub = function (options) {
+            LIFE_CIRCLE.map((key) => {
+                if (this[key] instanceof Array) {
+                    let tempArray = [].concat(this[key]);
+                    this[key] = function () {
+                        for (let index =0; index < tempArray.length; index++) {
+                            tempArray[index].call(this);
+                        }
+                    };
+                }
+            });
             this._init(options);
         };
 
@@ -152,7 +160,7 @@ function initExtend (App) {
         Sub.prototype.constructor = Sub;
 
         _combine(
-            Sub.prototype,
+            Sub,
             extendOptions
         );
 

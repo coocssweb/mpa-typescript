@@ -2,7 +2,7 @@
  * 测试页面
  * Created by 王佳欣 on 2018/3/19.
  */
-
+import FullPage from '../modules/alloyTouch/fullPage';
 export default {
     el: {
         $page: $('.test'),
@@ -19,8 +19,17 @@ export default {
     bindData () {
 
     },
-    created () {
-        console.log('home created');
-        this.open();
+    create () {
+        /* eslint-disable no-new */
+        new FullPage('#fullpage', {
+            animationEnd () {
+            },
+            leavePage (index) {
+                console.log('leave' + index);
+            },
+            beginToPage (index) {
+                console.log('to' + index);
+            }
+        });
     }
 };

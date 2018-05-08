@@ -9,15 +9,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="format-detection" content="telephone=no" />
     <script>
-        var href = document.location.href;
-        if (href.indexOf('?') > -1 && href.indexOf('#') > -1 && href.indexOf('?') < href.indexOf('#')) {
-            document.location.href = document.location.origin + document.location.pathname + (document.location.hash || '').split('&')[0] + document.location.search;
-        } else if (href.indexOf('#') > -1 && href.indexOf('&') > -1) {
-            var hash = document.location.hash.split(/&|\?|#/)[1];
-            var searchStr = href.indexOf('?') > -1 ? ('?' + href.split('?')[1]) : '';
-            document.location.href = document.location.origin + document.location.pathname + '#' + hash + searchStr;
-        }
-
         ; (function (win, doc) {
             var docEl = doc.documentElement,
                 UA = navigator.userAgent,

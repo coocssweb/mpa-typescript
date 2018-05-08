@@ -179,6 +179,12 @@ class ThirdPlat {
             return false;
         }
 
+        // 美图系分享
+
+        // return /com\.(meitu|commsource)\./.test(UA);
+
+        // QQ分享
+
         loadJs (this.jsSdk).then(() => {
             window.wx = wx;
             return $.ajax({
