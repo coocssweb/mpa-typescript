@@ -180,9 +180,9 @@ class ThirdPlat {
                         back: true
                     }, (result) => {
                         if (result.retCode === 0) {
-                            this.success();
+                            this.success && this.success();
                         } else if (result.retCode === 1) {
-                            this.fail();
+                            this.fail && this.fail();
                         }
                     });
                 });
