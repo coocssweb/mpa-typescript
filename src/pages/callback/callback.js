@@ -2,9 +2,8 @@
  * 登录回调
  * Created by 王佳欣 on 2018/4/4.
  */
-import AuthApi from './api/auth';
-import {ORIGIN_URL} from './const';
-import Auth from './modules/auth';
+import AuthApi from 'resources_api/auth';
+import {ORIGIN_URL} from 'resources_const';
 
 // message 处理
 let messageHandler = (e) => {
@@ -14,7 +13,6 @@ let messageHandler = (e) => {
         accountData.response.client_id = 1089867664;
         let opType = accountData.response.op_type;
         let clientParams = accountData.meta.params;
-        Auth.logout();
         if (opType !== 3) {
             AuthApi.login(accountData.response).then((data) => {
                 if (data.meta.code === 0) {

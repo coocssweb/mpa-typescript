@@ -225,16 +225,16 @@ class ThirdPlat {
                         desc,
                         link: formatShareUrl(link),
                         imgUrl,
-                        trigger: function (e) {
+                        trigger (e) {
                             this.trigger && this.trigger();
                         },
-                        success: function (e) {
+                        success(e) {
                             this.success && this.success();
                         },
-                        fail: function () {
+                        fail() {
                             this.fail && this.fail();
                         },
-                        cancel: function () {
+                        cancel() {
                             this.cancel && this.cancel();
                         }
                     });

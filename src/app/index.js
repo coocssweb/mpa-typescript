@@ -35,80 +35,108 @@ function App (options) {
 }
 
 function initEvents (App) {
-    // 分享信息
-    App.prototype.$share = {
-        /**
-         * 配置分享信息
-         * @param title                     分享标题
-         * @param description               分享描述
-         * @param thumb                     分享图标
-         * @param dom                       触发dom
-         * @param success                   分享成功
-         * @param cancel                    取消分享
-         * @param start                     点击分享
-         */
-        config ({title, description, thumb, dom}, success, cancel, start) {
+    /**
+     * 统计埋点相关
+     * 目前支持 cnzz统计、百度统计埋点
+     */
+    (() => {
+        /* eslint-disable */
+        App.prototype.$cnzz = {
+            event ({dom, event}) {
+                _czc.push(['_trackEvent', dom, event]);
+            },
+            page ({page}) {
+                _czc.push(['_trackPageview', page]);
+            }
+        };
 
-        },
-        call () {
+        App.prototype.$baidu = {
+            event ({dom, event}) {
 
-        }
-    };
+            },
+            page ({page}) {
 
-    // cnzz统计
-    App.prototype.$cnzz = {
-        // 事件统计
-        event ({dom, event}) {
-            /* eslint-disable */
-            _czc.push(['_trackEvent', dom, event]);
-        },
-        // pv统计
-        page ({page}) {
-            _czc.push(['_trackPageview', page]);
-        }
-    };
+            }
+        };
+    })();
 
-    App.prototype.$tip = function ({message, type, timeout = 2000}) {
-        $('body').append(`<div class="global-tip">${message}</div>`);
-        setTimeout(() => {
-            $('.global-tip').addClass('out').on('animationend webkitAnimationEnd oAnimationEnd', function () {
+    /**
+     * 全局提示
+     * 目前支持tip 、 toast
+     * 可自行定义
+     */
+    (() => {
+        App.prototype.$tip = function ({message, type}) {
+            $('body').append(`<div class="globalTip"><div class="globalTip-inner">${message}</div></div>`);
+            $('.globalTip').addClass('show').on('animationend webkitAnimationEnd oAnimationEnd', function () {
                 $(this).remove();
             });
-        }, timeout);
-    };
+        };
 
-    App.prototype.open = function () {
-        if (this.el && this.el.$page) {
-            this.el.$page
-                .addClass('animating')
-                .addClass('open')
-                .on('animationend webkitAnimationEnd oAnimationEnd', function () {
-                    $(this).addClass('show').removeClass('animating').removeClass('open');
+        App.prototype.$toast = {
+            open ({type, message, timeout}) {
+                $('body').append(`<div class="globalToast">
+                <div class="globalToast-mask"></div>
+                <div class="globalToast-box">
+                    <i class='globalToast-icon ${type === 'loading' ? 'weui-loading' : `weui-icon-${type}`}'></i>
+                    <p class="globalToast-content">${message}</p>
+                </div>
+            </div>`);
+
+                if (!timeout) {
+                    return;
+                }
+
+                setTimeout(() => {
+                    this.close();
+                }, timeout);
+            },
+            close () {
+                $('.globalToast').addClass('out').on('animationend webkitAnimationEnd oAnimationEnd', function () {
+                    $(this).remove();
                 });
-        }
-    };
+            }
+        };
+    })();
 
-    App.prototype.close = function () {
-        if (this.el && this.el.$page) {
-            this.el.$page
-                .addClass('animating')
-                .addClass('close')
-                .on('animationend webkitAnimationEnd oAnimationEnd', function () {
-                    $(this).removeClass('show').removeClass('animating').removeClass('close');
-                });
-        }
-    };
+    /**
+     * App命名周期相关
+     * ['beforeCreate', 'create', 'close', 'open']
+     */
+    (() => {
+        App.prototype.open = function () {
+            if (this.el && this.el.$page) {
+                this.el.$page
+                    .addClass('animating')
+                    .addClass('open')
+                    .on('animationend webkitAnimationEnd oAnimationEnd', function () {
+                        $(this).addClass('show').removeClass('animating').removeClass('open');
+                    });
+            }
+        };
 
-    App.prototype.beforeCreate = function () {
+        App.prototype.close = function () {
+            if (this.el && this.el.$page) {
+                this.el.$page
+                    .addClass('animating')
+                    .addClass('close')
+                    .on('animationend webkitAnimationEnd oAnimationEnd', function () {
+                        $(this).removeClass('show').removeClass('animating').removeClass('close');
+                    });
+            }
+        };
 
-    };
+        App.prototype.beforeCreate = function () {
 
-    App.prototype.create = function () {
-        if (this.bindEvent) {
-            this.bindEvent();
-        }
-        this.open();
-    };
+        };
+
+        App.prototype.create = function () {
+            if (this.bindEvent) {
+                this.bindEvent();
+            }
+            this.open();
+        };
+    })();
 };
 
 // 定义App._init
@@ -147,7 +175,7 @@ function initExtend (App) {
                 if (this[key] instanceof Array) {
                     let tempArray = [].concat(this[key]);
                     this[key] = function () {
-                        for (let index =0; index < tempArray.length; index++) {
+                        for (let index = 0; index < tempArray.length; index++) {
                             tempArray[index].call(this);
                         }
                     };
@@ -179,13 +207,9 @@ function initMixin (App) {
 }
 
 init(App);
-
 initEvents(App);
-
 initUse(App);
-
 initExtend(App);
-
 initMixin(App);
 
 export default App;

@@ -19,11 +19,15 @@ export default {
             this.$router.replace('test', {params: 2});
         });
         $('.js_router').click(() => {
-            console.log(this.$router.route);
+            console.log(this.$router);
         });
 
         $('.js_tip').click(() => {
             this.$tip({message: '测试提示信息'});
+        });
+
+        $('.js_toast').click(() => {
+            this.$toast.open({type: 'success-no-circle', message: '保存成功', timeout: 2000});
         });
 
         $('.js_share').click(() => {

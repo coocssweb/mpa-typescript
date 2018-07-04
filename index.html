@@ -37,7 +37,7 @@
             refreshRem();
         })(window, document);
     </script>
-<link href="dist/stylesheets/index.3fa89f375aabefe356efb6069684f1f6.css" rel="stylesheet"></head>
+<link href="dist/stylesheets/index.ed28fea4199476f64bdc7458fed5abaf.css" rel="stylesheet"></head>
 
 <body>
 <div class="wrapper">
@@ -49,17 +49,38 @@
     <a href="javascript:;" class="js_replace">replace {params: 2}</a>
     <a href="javascript:;" class="js_router">当前路由信息</a>
     <a href="javascript:;" class="js_tip">打开提示框</a>
+    <a href="javascript:;" class="js_toast">打开toast</a>
     <a href="javascript:;" class="js_share">设置分享</a>
 </div>
     
         <div class="test page">
-    <a href="/#">回到Home</a>
+    <div class="test-wrapper" id="fullpage">
+        <div class="section section——first">
+            <div class="section-main animated" data-show="flipInY" data-hide="flipOutY">
+                <div class="section-title">第一屏</div>
+            </div>
+        </div>
+        <div class="section section——second">
+            <div class="section-main animated" data-show="flipInY" data-hide="flipOutY">
+                <div class="section-title">第二屏</div>
+            </div>
+        </div>
+        <div class="section section——third">
+            <div class="section-main animated" data-show="flipInY" data-hide="flipOutY">
+                <div class="section-title">第三屏</div>
+            </div>
+        </div>
+        <div class="section section——four">
+            <div class="section-main animated" data-show="flipInY" data-hide="flipOutY">
+                <div class="section-title">第四屏</div>
+            </div>
+        </div>
+    </div>
+    <a href="/#" class="link-back">返回首页</a>
 </div>
     
 
 </div>
-<div class="tip"></div>
-
 <div class="globalLoading">
     <div class="globalLoading-progress">
         <div class="globalLoading-percent"></div>
@@ -71,5 +92,11 @@
 </script>
 
 
-<script type="text/javascript" src="dist/js/index.0e9e7479.js"></script></body>
+
+<script type="text/javascript" src="http://wechatfe.github.io/vconsole/lib/vconsole.min.js?v=3.2.0"></script>
+<script type="text/javascript">
+    var vConsole = new VConsole();
+</script>
+
+<script type="text/javascript" src="dist/js/index.f4261a43.js"></script></body>
 </html>

@@ -1,10 +1,10 @@
 /**
  * 路由定义
  */
-import Home from './pages/home';
-import Test from './pages/test';
-import Router from './modules/router';
-import App from './app';
+import Home from './home';
+import Test from './test';
+import Router from 'resources_modules/router';
+import App from 'app';
 
 App.use(Router);
 

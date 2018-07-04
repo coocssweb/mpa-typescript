@@ -2,7 +2,7 @@
  * 渲染
  * Created by 王佳欣 on 2018/4/15.
  */
-import Layout from './layout';
+import Layout from 'layout';
 import Home from './template/home.ejs';
 import Test from './template/test.ejs';
 

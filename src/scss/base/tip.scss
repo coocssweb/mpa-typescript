@@ -1,19 +1,42 @@
-.global-tip{
-    background: rgba(17, 17, 17, 0.7);
-    border-radius: 3PX;
-    height: 30px;
-    line-height: 30px;
-    color: #ffffff;
-    position: absolute;
-    top: 100px;
-    left: 50%;
-    transform: translate3d(-50%, 0, 0);
+@keyframes globalTip {
+    0%{
+        transform: translate3d(0, 0, 0);
+        opacity: 0;
+    }
+    40%{
+        opacity: 1;
+        transform: translate3d(0, 20PX, 0);
+    }
+    80%{
+        opacity: 1;
+        transform: translate3d(0, 20PX, 0);
+    }
+    100%{
+        transform: translate3d(0, 0, 0);
+        opacity: 0;
+    }
+}
+
+.globalTip{
+    position: fixed;
+    top: 200px;
+    width: 100%;
     z-index: 2000;
-    padding: 15px 40px;
-    font-size: 24px;
+    font-size: 28px;
     white-space: nowrap;
-    animation: tip-in 0.5s ease forwards;
-    &.out{
-        animation: tip-out 0.5s ease forwards;
+    display: none;
+    text-align: center;
+    &-inner{
+        background: rgba(0, 0, 0, 0.7);
+        border-radius: 3PX;
+        height: 30px;
+        line-height: 30px;
+        color: #fff;
+        display: inline-block;
+        padding: 15px 40px;
+    }
+    &.show{
+        display: block;
+        animation: globalTip 3s ease forwards;
     }
 }

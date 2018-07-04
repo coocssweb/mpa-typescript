@@ -2,7 +2,7 @@
  * 测试页面
  * Created by 王佳欣 on 2018/3/19.
  */
-import FullPage from '../modules/alloyTouch/fullPage';
+import FullPage from 'resources_modules/alloyTouch/fullPage';
 export default {
     el: {
         $page: $('.test'),

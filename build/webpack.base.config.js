@@ -7,11 +7,53 @@ const {resolve} = require('./utils');
 module.exports = function webpackBaseConfig (NODE_ENV = 'development') {
     const config = require('../config/config')[NODE_ENV];
 
+    const files = [
+        {name: 'index', path: resolve('src', 'pages/demo/index.js'), filename: 'index.html', template: path.resolve('./src/pages/demo/render.js')},
+        {name: 'callback', path: resolve('src', 'pages/callback/callback.js'), filename: 'callback.html', template: path.resolve('./src/pages/callback/callback.html')}
+    ];
+
+    let entry = {};
+
+    let plugins = [
+        new ExtractTextPlugin({
+            filename: 'dist/stylesheets/[name].[contenthash].css',
+            allChunks: true
+        }),
+        new webpack.ProvidePlugin({
+            $: 'jquery',
+        }),
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
+            'process.env.API_DOMAIN': JSON.stringify(config.API_DOMAIN),
+            'process.env.ORIGIN_URL': JSON.stringify(config.ORIGIN_URL),
+            'process.env.ACCOUNT_URL': JSON.stringify(config.ACCOUNT_URL),
+            'process.env.ACCOUNT_JS_SDK': JSON.stringify(config.ACCOUNT_JS_SDK),
+            'process.env.MT_ACCOUNT': config.MT_ACCOUNT,
+            'process.env.ACCOUNT_CALLBACK': JSON.stringify(config.ACCOUNT_CALLBACK),
+            'process.env.ACCOUNT_LOGIN': JSON.stringify(config.ACCOUNT_LOGIN)
+        })
+    ];
+
+    files.forEach((item) => {
+        entry[item.name] = item.path;
+        plugins.push(
+            new HtmlWebpackPlugin({
+                filename: item.filename,
+                template: item.template,
+                chunks: [item.name],
+                hash: false,
+                inject: 'body',
+                xhtml: false,
+                minify: {
+                    removeComments: true,
+                }
+            })
+        );
+    });
+
+
     const webpackConfig = {
-        entry: {
-            index: resolve('src', 'index.js'),
-            callback: resolve('src', 'callback.js'),
-        },
+        entry,
         output: {
             path: resolve(''),
             publicPath: config.staticPath,
@@ -79,45 +121,19 @@ module.exports = function webpackBaseConfig (NODE_ENV = 'development') {
                 },
             ]
         },
-        plugins: [
-            new ExtractTextPlugin({
-                filename: 'dist/stylesheets/[name].[contenthash].css',
-                allChunks: true
-            }),
-            new HtmlWebpackPlugin({
-                filename: 'index.html',
-                template: path.resolve('./src/render.js'),
-                chunks: ['index'],
-                hash: false,
-                inject: 'body',
-                xhtml: true,
-                minify: {
-                    removeComments: true,
-                }
-            }),
-            new HtmlWebpackPlugin({
-                filename: 'callback.html',
-                template: path.resolve('./src/template/callback.html'),
-                chunks: ['callback'],
-                hash: false,
-                inject: 'body',
-                xhtml: true,
-                minify: {
-                    removeComments: true,
-                }
-            }),
-            new webpack.ProvidePlugin({
-                $: 'jquery',
-            }),
-            new webpack.DefinePlugin({
-                'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
-                'process.env.API_DOMAIN': JSON.stringify(config.API_DOMAIN),
-                'process.env.ORIGIN_URL': JSON.stringify(config.ORIGIN_URL),
-                'process.env.ACCOUNT_URL': JSON.stringify(config.ACCOUNT_URL),
-                'process.env.ACCOUNT_JS_SDK': JSON.stringify(config.ACCOUNT_JS_SDK),
-                'process.env.MT_ACCOUNT': config.MT_ACCOUNT
-            })
-        ]
+        plugins,
+        resolve: {
+            alias: {
+                app: resolve('src/app/index.js'),
+                layout: resolve('src/layout/index.js'),
+                resources_modules: resolve('src/modules/'),
+                resources_api: resolve('src/api/'),
+                resources_const: resolve('src/const/'),
+                resources_utils: resolve('src/utils/'),
+                resources_template: resolve('src/template/'),
+                resources_scss: resolve('src/scss/')
+            },
+        },
     };
 
     if (NODE_ENV !== 'development') {
