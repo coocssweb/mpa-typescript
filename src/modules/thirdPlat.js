@@ -47,24 +47,21 @@ class ThirdPlat {
                     <a 
                         class="globalShare-item" 
                         target="_share" 
-                        href="${encodeURI(`http://v.t.sina.com.cn/share/share.php?url=${this.shareConfig.link}&title=${this.shareConfig.title}&description=${this.shareConfig.desc}&charset=utf-8&pic=${this.shareConfig.imageUrl}`)}&searchPic=true" 
-                        class="globalShare-item globalShare-item">
+                        href="${encodeURI(`http://v.t.sina.com.cn/share/share.php?url=${this.shareConfig.link}&title=${this.shareConfig.title}/${this.shareConfig.desc}&charset=utf-8&pic=${this.shareConfig.imgUrl}`)}&searchPic=true">
                         <span class="globalShare-icon globalShare-icon——weibo"></span>
                         <span class="globalShare-name">微博</span>
                     </a>
                     <a 
                         class="globalShare-item" 
                         target="_share" 
-                        href="${encodeURI(`http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=${this.shareConfig.link}&title=${this.shareConfig.title}&desc=${this.shareConfig.desc}&charset=utf-8&pics=${this.shareConfig.imageUrl}&site=${this.shareConfig.link}&otype=share`)}" 
-                        class="globalShare-item globalShare-item">
+                        href="${encodeURI(`http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=${this.shareConfig.link}&title=${this.shareConfig.title}&desc=${this.shareConfig.desc}&charset=utf-8&pics=${this.shareConfig.imgUrl}&site=${this.shareConfig.link}&otype=share`)}">
                         <span class="globalShare-icon globalShare-icon——qqzone"></span>
                         <span class="globalShare-name">QQ空间</span>
                     </a>
                     <a 
                         class="globalShare-item" 
                         target="_share" 
-                        href="${encodeURI(`http://widget.renren.com/dialog/share?resourceUrl=${this.shareConfig.link}&title=${this.shareConfig.title}&description=${this.shareConfig.desc}&charset=utf-8&pic=${this.shareConfig.imageUrl}`)}" 
-                        class="globalShare-item globalShare-item">
+                        href="${encodeURI(`http://widget.renren.com/dialog/share?resourceUrl=${this.shareConfig.link}&title=${this.shareConfig.title}&description=${this.shareConfig.desc}&charset=utf-8&pic=${this.shareConfig.imgUrl}`)}">
                         <span class="globalShare-icon globalShare-icon——renren"></span>
                         <span class="globalShare-name">人人网</span>
                     </a>
@@ -150,6 +147,7 @@ class ThirdPlat {
     }
 
     _initMeitu() {
+	let that = this;
         let {title, desc, link, imgUrl} = this.shareConfig;
         window.addEventListener('WebviewJsBridgeReady', () => {
             window.MTJs.onSharePageInfo({
@@ -158,7 +156,7 @@ class ThirdPlat {
                 description: desc,
                 link: link,
                 success: function () {
-                    this.success && this.success();
+                    that.success && that.success();
                 }
             });
         }, false);
@@ -208,6 +206,7 @@ class ThirdPlat {
     }
 
    _initWechat () {
+	let that = this;
         const setWechatShare = () => {
             const PLATS = ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo', 'onMenuShareQZone'];
 
@@ -226,16 +225,16 @@ class ThirdPlat {
                         link: formatShareUrl(link),
                         imgUrl,
                         trigger (e) {
-                            this.trigger && this.trigger();
+                            that.trigger && that.trigger();
                         },
                         success(e) {
-                            this.success && this.success();
+                            that.success && that.success();
                         },
                         fail() {
-                            this.fail && this.fail();
+                            that.fail && that.fail();
                         },
                         cancel() {
-                            this.cancel && this.cancel();
+                            that.cancel && that.cancel();
                         }
                     });
                 });
