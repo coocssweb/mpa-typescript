@@ -1,0 +1,89 @@
+@keyframes tipIn {
+    0%{
+        opacity: .5;
+        transform: translateY(-5PX) translateZ(0);
+    }
+    100%{
+        opacity: 1;
+        transform: translateY(0) translateZ(0);
+    }
+}
+
+@keyframes tipOut {
+    0%{
+        opacity: 1;
+        transform: translateY(0) translateZ(0);
+    }
+    100%{
+        opacity: 0;
+        transform: translateY(0)translateZ(0);
+    }
+}
+
+.globalTip{
+    position: fixed;
+    width: 100%;
+    text-align: center;
+    top: 50PX;
+    left: 0PX;
+    opacity: 0;
+    animation: tipIn .3s ease-out forwards;
+    z-index: 100;
+    &-content{
+        display: inline-block;
+        padding: $paddingSizeL $paddingSizeXL;
+        font-size: $fontSizeL;
+        border-radius: $borderRadiusS;
+        position: relative;
+        z-index: 1;
+    }
+
+    &-close{
+        position: absolute;
+        top: 50%;
+        right: 10PX;
+        height: 26PX;
+        width: 26PX;
+        border-radius: 13PX;
+        background-image: url(../images/global/icon-close.png);
+        background-size: 12PX 12PX;
+        background-position: center;
+        background-repeat: no-repeat;
+        margin-top: -12PX;
+        cursor: pointer;
+        transition: background-color .3s ease;
+        &:active{
+            background-color: rgba(255, 255, 255, .3);
+        }
+    }
+
+    &--closable{
+       .globalTip-content{
+           padding-right: 3 * $paddingSizeXL;
+       } 
+    }
+
+    &--default{
+        .globalTip{
+            &-content{
+                box-shadow: 0px 2PX 3PX rgba(0, 0, 0, .4);
+                background-color: $colorDefault;
+                color: #ffffff;
+            }
+        }
+    }
+
+    &--primary{
+        .globalTip{
+            &-content{
+                box-shadow: 0px 2PX 3PX rgba(0, 0, 0, .4);
+                background-color: $colorPrimary;
+                color: #ffffff;
+            }
+        }
+    }
+
+    &.doOut{
+        animation: tipOut .5s ease-out forwards;
+    }
+}

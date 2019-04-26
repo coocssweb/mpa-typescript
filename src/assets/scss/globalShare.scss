@@ -1,0 +1,98 @@
+
+.globalShare{
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 1);
+    width: 300PX;
+    transform: translate3d(100%, 0, 0);
+    animation: slideInRight .3s linear forwards;
+    box-shadow: -1PX 0PX 10PX rgba(0, 0, 0, 0.1);
+    &.doOut{
+        animation: slideOutRight .5s ease-in-out forwards;
+    }
+    &.doHide{
+        display: none;
+    }
+
+    &-inner{
+        position: absolute;
+        top: 50%;
+        left: 80PX;
+        width: 140PX;
+        height: 420PX;
+        margin-top: -150PX;
+    }
+    &-title{
+        font-size: 16PX;
+        color: #989896;
+        font-weight: normal;
+    }
+    &-list{
+        margin-top: 20PX;
+    }
+    &-item{
+        position: relative;
+        padding-top: 15PX;
+        cursor: pointer;
+        &:hover{
+            .globalShare{
+                &-icon{
+                    color: #df3846;
+                    &--wx{
+                        i{
+                            background-position: -450PX -630PX
+                        }
+                    }
+                    &--wb{
+                        i{
+                            background-position: -480PX -630PX
+                        }
+                    }
+                    &--qzone{
+                        i{
+                            background-position: -570PX -630PX
+                        }
+                    }
+                }
+                &-qrcode{
+                    display: block;
+                }
+            }
+        }
+    }
+    &-icon{
+        font-size: 16PX;
+        line-height: 28PX;
+        color: #2d2f28;
+        text-indent: 20PX;
+        i{
+            display: block;
+            float: left;
+            width: 28PX;
+            height: 28PX;
+            background: url(../images/global/sprite.png) no-repeat;
+        }
+        &--wx{
+            i{
+                background-position:  -450PX -600PX;
+            }
+        }
+        &--wb{
+            i{
+                background-position:  -480PX -600PX; 
+            }
+        }
+        &--qzone{
+            i{
+                background-position:  -570PX -600PX; 
+            }
+        }
+    }
+
+    &-qrcode{
+        display: none;
+    }
+}

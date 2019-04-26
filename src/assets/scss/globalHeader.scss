@@ -1,0 +1,32 @@
+.globalHeader{
+    border-bottom: 1PX solid #eeefef;
+    padding: 20PX 0px;
+    &-wrapper{
+        max-width: $globalWidth;
+        margin: 0px auto;
+        height: 36PX;
+        line-height: 36PX;
+    }
+    &-logo{
+        color: #FF5A5F;
+        font-size: 20PX;
+    }
+}
+
+.globalLocation{
+    &-wrapper{
+        max-width: $globalWidth;
+        margin: 0px auto;
+        padding: 20PX 0;
+    }
+    &-item{
+        font-size: $fontSizeM;
+        color: $colorGrayDark;
+        &--link{
+            color: $colorGrayDarker;
+            &:hover{
+                text-decoration: underline;
+            }
+        }
+    }
+}

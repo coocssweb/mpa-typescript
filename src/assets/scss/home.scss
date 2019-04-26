@@ -1,0 +1,39 @@
+@import "base/variables.scss";
+
+.introduction{
+    background-color: #00b934;
+    color: #ffffff;
+    padding: 150PX 0;
+    &-content{
+        text-align: center;
+    }
+    &-title{
+        font-size: 30PX;
+    }
+    &-description{
+        text-align: center;
+        font-size: $fontSizeL;
+        margin: 20PX 0;
+    }
+}
+.feature{
+    padding: 100px 0 110px 0;
+    text-align: center;
+    &-title{
+        font-size: 30px;
+        font-weight: 300;
+    }
+    &-description{
+        font-size: $fontSizeL;
+        color: $colorGrayDark;
+        margin-top: 20px;
+    }
+    &-show{
+        margin-top: 30PX;
+    }
+}
+
+.value--new, .value--old{
+    background-color: bisque;
+    font-style: italic;
+}

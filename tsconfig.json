@@ -1,0 +1,33 @@
+{
+    "compilerOptions": {
+        "module": "es6",
+        "target": "es2015",
+        "lib": [
+            "es2016",
+            "dom"
+        ],
+        "removeComments": true,
+        "moduleResolution": "Classic",
+        "declaration": false,
+        "noImplicitAny": false,
+        "sourceMap": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "baseUrl": "./src",
+        "paths":{
+            "@app": ["app/index.ts"],
+            "@layout": ["layout/index.js"],
+            "@scss/*": ["assets/scss/*"],
+            "@utils/*": ["utils/*"],
+            "@modules/*": ["app/modules/*"]
+        }
+    },
+    "compileOnSave": false,
+    "exclude": [
+        "node_modules",
+        "build",
+        "config"
+    ],
+    "include": [
+        "src"
+    ]
+}

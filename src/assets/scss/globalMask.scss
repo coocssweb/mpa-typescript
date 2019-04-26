@@ -1,0 +1,17 @@
+.globalMask {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(50, 50, 50, .88);
+    z-index: 100;
+    display: none;
+    &.doIn{
+        display: block;
+        animation: fadeIn .3s ease forwards;
+    }
+    &.doOut{
+        animation: fadeOut .3s ease forwards;
+    }
+}

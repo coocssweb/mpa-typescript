@@ -1,0 +1,59 @@
+.globalConfirm{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    background-color: #ffffff;
+    padding: 50PX 50PX 30PX 50PX;
+    box-sizing: border-box;
+    z-index: 101;
+    animation: fadeIn .3s ease forwards;
+    &.doOut{
+        animation: fadeOut .3s ease forwards;
+    }
+    &-header{
+        position: relative
+    }
+    &-title{
+        font-size: 25PX;
+        color: #000000;
+        text-align: center;
+        margin-bottom: 30PX;
+    }
+    &-close{
+        position: absolute;
+        right: 20PX;
+        top: 20PX;
+        height: 30PX;
+        width: 30PX;
+        border-radius: 15PX;
+        background-repeat: no-repeat;
+        background-position: center;
+        cursor: pointer;
+        background-image: url(../images/global/icon-close.png);
+        &:hover{
+            opacity: .8;
+        }
+    }
+    &-content{
+        line-height: 1.5;
+    }
+    &-footer{
+        border-top: 1PX solid #f3f3f3;
+        margin-top: 30PX;
+    }
+
+    &-btn{
+        width: 100%;
+        padding-left: 0px;
+        padding-right: 0px;
+        @extend .btn;
+        @extend .btn--large;
+        &--ok{
+            @extend .btn-primary;
+            
+        }
+        &--cancel{
+            @extend .btn-transparent;
+        }
+    }
+}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <meta name="App-Config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="telephone=no,email=no" name="format-detection">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="msapplication-navbutton-color" content="#ffffff">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <title><%= title  %></title>
+    <meta name="keywords" content="<%= keyword %>" />
+    <meta name="description" content="<%= description %>" />
+    <script>
+        ;(function (window, documentElement) {
+            function refreshRem () {
+                var width = documentElement.getBoundingClientRect().width || 320;
+                var fontSize = width / 375 * 100;
+                fontSize = fontSize > 200 ? 200 : fontSize;
+                documentElement.style.fontSize = fontSize + 'px';
+            };
+            var timeId;
+            window.addEventListener('resize', function () {
+                clearTimeout(timeId);
+                timeId = setTimeout(refreshRem, 100)
+            }, false);
+            window.addEventListener("pageshow", function (e) {
+                if (e.persisted) {
+                    clearTimeout(timeId);
+                    timeId = setTimeout(refreshRem, 100)
+                }
+            }, false);
+            refreshRem();
+        })(window, document.documentElement);
+    </script>
+</head>
+<body>
+<%= header %>
+<%= location %>
+<div id="app">
+    <%= content %>
+</div>
+<%= footer %>
+<%= loading%>
+<% if (console) {%>
+    <script type="text/javascript" src="http://wechatfe.github.io/vconsole/lib/vconsole.min.js?v=3.2.0"></script>
+    <script type="text/javascript">
+        var vConsole = new VConsole();
+    </script>
+<% } %>
+</body>
+</html>

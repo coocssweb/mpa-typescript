@@ -1,0 +1,44 @@
+@keyframes fadeIn {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    0%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
+}
+
+@keyframes slideInRight {
+    0%{
+        transform: translate3d(100%, 0, 0);
+    }
+    100%{
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes slideOutRight {
+    0%{
+        transform: translate3d(0, 0, 0);
+    }
+    100%{
+        transform: translate3d(100, 0, 0);
+    }
+}
+
+@keyframes rollOneTurn {
+    0% {
+        transform: rotate(0deg)
+    }
+    to {
+        transform: rotate(1turn)
+    }
+}

@@ -1,0 +1,15 @@
+<div class="globalLocation">
+    <div class="globalLocation-wrapper">
+        你的位置：
+        <% for (var i = 0; i< location.length; i++) { %>
+            <% if (location[i].url) { %>
+            <a href="<%= location[i].url %>" class="globalLocation-item globalLocation-item--link"><%= location[i].name %></a>
+            <% } else {%>
+            <span class="globalLocation-item"><%= location[i].name %></span>
+            <%}%>
+            <%if (i != location.length - 1 ) {%>
+            <span class="globalLocation-split">»</span>
+            <%}%>
+        <%}%>
+    </div>
+</div>

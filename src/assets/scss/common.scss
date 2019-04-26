@@ -1,0 +1,92 @@
+@import "base/normalize";
+@import "base/variables";
+@import "base/button";
+@import "base/animation";
+@import "globalMask";
+@import "globalTip";
+@import "globalConfirm";
+@import "globalShare";
+@import "globalHeader";
+@import "globalFooter";
+
+html, body{
+    background: transparent;
+    -webkit-overflow-scrolling: touch;
+    height: 100%;
+}
+
+body {
+    font-family: Microsoft YaHei,Helvetica Neue,HelveticaNeue,Helvetica,TeXGyreHeros,FreeSans,Nimbus Sans L,Liberation Sans,Arial,sans-serif;
+    font-size: 14PX;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #ffffff;
+}
+
+#app{
+    position: relative;
+}
+
+dd, dl, dt, p, nav, div, ul,li, header, h1, h2, h3, h4, h5, h6,iframe, button{
+    margin: 0px;
+    padding: 0px;
+    display: block;
+}
+h2{
+    font-weight: normal;
+}
+input{
+    -webkit-appearance: none;
+    border-radius: 0;
+}
+a{
+    text-decoration:  none;
+    -webkit-tap-highlight-color: rgba(255,255,255,0);
+    outline: none;
+}
+
+button, div{
+    -webkit-tap-highlight-color: rgba(255,255,255,0);
+}
+
+
+ul, li, h3{
+    list-style: none;
+    -webkit-tap-highlight-color: rgba(255,255,255,0);
+}
+
+::-webkit-input-placeholder{
+    color: #c0c0c0;
+    font-size: 14PX;
+}
+::-moz-placeholder{
+    color: #c0c0c0;
+    font-size: 14PX;
+}
+:-ms-input-placeholder{
+    color: #c0c0c0;
+    font-size: 14PX;
+}
+
+input:disabled {
+    color: #555555;
+}
+
+::selection {
+    background-color: #0087cd;
+    color: #fff;
+}
+::selection {
+    background-color: #0087cd;
+    color: #fff;
+}
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    line-height: 0;
+    clear: both;
+    visibility: hidden;
+}

@@ -1,0 +1,55 @@
+.globalLoading{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #000;
+    &.doOut{
+        animation: fadeOut 1s ease forwards;
+    }
+    &-container{
+        position: absolute;
+        top: 50%;
+        left: 50%;   
+        margin-left: -30px;
+        margin-top: -50px;
+    }
+    &-box{
+        width: 60PX;
+        height: 60PX;
+        margin: 0px auto;
+        animation: loadingScaleIn 1s ease forwards;
+        &.doOut{
+            animation: loadingScaleOut 1s ease forwards;
+        }
+        @keyframes loadingScaleIn {
+            0%{
+                transform: scale(0.5);
+            }
+            100%{
+                transform: scale(1);
+            }
+        }
+        @keyframes loadingScaleOut {
+            0%{
+                transform: scale(1);
+            }
+            100%{
+                transform: scale(.5);
+            }
+        }
+    }
+    &-icon{
+        display: block;
+        width: 60PX;
+        height: 60PX;
+        animation: rollOneTurn 3s linear infinite;
+    }
+    &-value{
+        text-align: center;
+        color: #b8aa79;
+        font-size: 14PX;
+        margin-top: 10PX;
+    }
+}
