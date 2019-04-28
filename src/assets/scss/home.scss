@@ -15,6 +15,11 @@
         font-size: $fontSizeL;
         margin: 20PX 0;
     }
+    &-more{
+        text-decoration: underline;
+        color: #ffffff;
+        font-size: 18PX;
+    }
 }
 .feature{
     padding: 100px 0 110px 0;
@@ -31,9 +36,36 @@
     &-show{
         margin-top: 30PX;
     }
+    &--install{
+        background-color: #f5f5f5;
+    }
 }
-
+.supports{
+    width: 600px;
+    text-align: left;
+    margin: 0px auto;
+    color: #333333;
+    font-size: 16PX;
+    line-height: 2.0;
+    li{
+        padding: 5PX 10px;
+        &:nth-child(odd){
+            background-color: #f5f5f5;
+        }
+    }
+}
 .value--new, .value--old{
     background-color: bisque;
     font-style: italic;
+}
+
+pre{
+    background-color: #000000;
+    color: #999999;
+    width: 600PX;
+    border-radius: 5PX;
+    padding: 10PX;
+    text-align: left;
+    padding: 20PX;
+    margin: 0px auto;
 }

@@ -43,17 +43,17 @@
                     color: #df3846;
                     &--wx{
                         i{
-                            background-position: -450PX -630PX
+                            background-position: -2PX -33PX
                         }
                     }
                     &--wb{
                         i{
-                            background-position: -480PX -630PX
+                            background-position: -32PX -33PX
                         }
                     }
                     &--qzone{
                         i{
-                            background-position: -570PX -630PX
+                            background-position: -62PX -33PX
                         }
                     }
                 }
@@ -77,22 +77,26 @@
         }
         &--wx{
             i{
-                background-position:  -450PX -600PX;
+                background-position:  -2PX -3PX;
             }
         }
         &--wb{
             i{
-                background-position:  -480PX -600PX; 
+                background-position:  -32PX -3PX; 
             }
         }
         &--qzone{
             i{
-                background-position:  -570PX -600PX; 
+                background-position:  -62PX -3PX; 
             }
         }
     }
 
     &-qrcode{
         display: none;
+        img{
+            display: block;
+            width: 150px;
+        }
     }
 }

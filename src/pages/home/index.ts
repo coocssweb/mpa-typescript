@@ -43,7 +43,7 @@ new App({
             this.$confirm({
                 title: '确认框标题',
                 okLabel: '2s, 后关闭',
-                content: '起初，这只是一个粉丝圈子的圈内自嗨。然而却意外的成为了一个影响了网络各大圈子的现象级事件。 于是我们开始思索这一事件的社会影响',
+                content: '1.自定义标题、内容；<br />2.自定义Button;<br/>3.自定义回调；<br />...等等',
                 okCallback: () => {
                     console.log(`click ok at:`, Date.now());
                     // support callback for async

@@ -69,7 +69,7 @@ export default class Browser extends Share {
                 <li class="${Browser.prefix}-item">
                     <div class="${Browser.prefix}-icon ${Browser.prefix}-icon--wx"><i></i>微信</div>
                     <div class="${Browser.prefix}-qrcode">
-                        <img src="http://static.ws.126.net/f2e/news/site_wss/images/qr_wx.jpg">
+                        <img src="https://raw.githubusercontent.com/coocssweb/coocssweb.github.io/master/photos/qrcode.png">
                     </div>
                 </li>
                 <li class="${Browser.prefix}-item" >
