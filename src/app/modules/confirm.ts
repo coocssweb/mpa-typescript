@@ -20,15 +20,18 @@ export default class Confirm {
         cancelCallback: EMPTY_FUNCTION,
     };
     static prefix = 'globalConfirm';
+
     private options: ConfirmOptions;
+    private transitionEvent: string;
+
     private $domContainer: HTMLElement;
     private $domClosable: HTMLElement;
     private $domOk: HTMLElement;
     private $domCancel: HTMLElement;
-    private transitionEvent: string;
 
     constructor (options: ConfirmOptions) {
         this.options = { ...Confirm.defaultOptions, ...options };
+
         // rebind
         this.handleOkClick = this.handleOkClick.bind(this);
         this.handleCancelClick = this.handleCancelClick.bind(this);

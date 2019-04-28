@@ -12,14 +12,14 @@ export const getTransitionEvent = () => {
         'OTransition':'oTransitionEnd',
         'MozTransition':'transitionend',
         'WebkitTransition':'webkitTransitionEnd'
-    }
+    };
 
     for (let transition in transitions) {
         if (el.style[transition] !== undefined) {
             return transitions[transition];
         }
     }
-}
+};
 
 export const getAnimationEvent = () => {
     let el = document.createElement('fake_a_element');
@@ -29,7 +29,7 @@ export const getAnimationEvent = () => {
         'OAnimation':'oAnimationEnd',
         'MozAnimation':'animationend',
         'WebkitAnimation':'webkitAnimationEnd'
-    }
+    };
 
     for (let animation in animations) {
         if (el.style[animation] !== undefined) {

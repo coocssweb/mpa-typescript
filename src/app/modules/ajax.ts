@@ -38,8 +38,8 @@ export const ajax = (options: AjaxOptions) => {
     }
     
     // define request header
-    options.token !== '' && xmlHttp.setRequestHeader('Authorization', options.token);
     xmlHttp.open(options.method, options.url, options.async);
+    options.token !== '' && xmlHttp.setRequestHeader('Authorization', options.token);
     xmlHttp.setRequestHeader('Content-Type', options.contentType);
     xmlHttp.setRequestHeader('Accept', options.dataType);
 

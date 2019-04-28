@@ -18,10 +18,10 @@ export default class Tip {
     };
     static prefix = 'globalTip';
 
+    private timeId: any;
+    private animationEvent: string;
     private $dom: HTMLElement;
     private $domClosable: HTMLElement;
-    private animationEvent: string;
-    private timeId: any;
     
     constructor (options: TipOptions) {
         options = { ...Tip.defaultOptions, ...options };

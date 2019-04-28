@@ -8,6 +8,7 @@ interface AppOptions {
     init?: Function,
     [propName: string]: any;
 }
+
 // a tool function for create app
 export default class Instance {
     constructor (options: AppOptions) {

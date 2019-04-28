@@ -11,7 +11,7 @@ const extend = (destination: any, source: any) => {
         }
     }
     return destination;
-}
+};
 
 function App (data: object, watchs: object) {
     this.data = data;
@@ -78,7 +78,7 @@ App.prototype = {
 
         this.init();
     }
-}
+};
 
 // extends app, return sub
 App.extends = (...args: any) => {
@@ -100,6 +100,6 @@ App.extends = (...args: any) => {
     });
 
     return Sub;
-}
+};
 
 export default App;

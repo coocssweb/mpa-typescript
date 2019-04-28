@@ -3,15 +3,16 @@
  * @author: 王佳欣
  * @email: 1974740999@qq.com
  */
-// 是否
-export const isNodeFound = (current: Node, componentNode: Node) => {
-    if (current === componentNode) {
+// find current target in parentNode
+// return is found?
+export const isNodeFound = (current: Node, parentNode: Node): boolean => {
+    if (current === parentNode) {
         return true;
     }
 
     while (current.parentNode) {
         current = current.parentNode;
-        if (current === componentNode) {
+        if (current === parentNode) {
             return true;
         }
     }
@@ -19,7 +20,8 @@ export const isNodeFound = (current: Node, componentNode: Node) => {
     return false;
 };
 
-// 获取滚动条宽度
+// get browser's scrollbar width
+// this can help to improve user experience
 let scrollBarWidth: number;
 export const getScrollbarWidth = () => {
     if (window.innerHeight >= document.body.offsetHeight) {
@@ -51,9 +53,9 @@ export const getScrollbarWidth = () => {
 };
 
 
-// 窗口是否可以滚动
-// 不可滚动时，设置body padding-right，防止出现闪动
-// 可以滚动时，移除body padding-right
+// to allow window scroll or not
+// no scroll，set body style padding-right = scrollbar
+// scroll, setbody padding-right = 0
 export const windowScroll = (canScroll: boolean) => {
     if (canScroll) {
         document.getElementsByTagName('html')[0].style.overflow = 'auto';
