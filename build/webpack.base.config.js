@@ -58,7 +58,6 @@ module.exports = function webpackBaseConfig (NODE_ENV = 'development') {
                     test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
                     loader: 'file-loader',
                     query: {
-                        limit: 1,
                         publicPath: config.imgPath,
                         name: `${config.filePath}fonts/${config.filenameHash ? '[name].[hash:8]' : '[name]'}.[ext]`
                     }

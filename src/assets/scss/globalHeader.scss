@@ -1,11 +1,12 @@
 .globalHeader{
     border-bottom: 1PX solid #eeefef;
-    padding: 20PX 0px;
+    padding: 10PX 0px;
     &-wrapper{
         max-width: $globalWidth;
         margin: 0px auto;
         height: 36PX;
         line-height: 36PX;
+        padding: 0px 20PX;
     }
     &-logo{
         color: #FF5A5F;

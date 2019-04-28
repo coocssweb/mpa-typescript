@@ -10,5 +10,5 @@ export default layout.render({
     description,
     content,
     loading: true,
-    location: []
+    location: [{ name: '首页', url: 'index.html' }, { name: 'demo' }]
 });

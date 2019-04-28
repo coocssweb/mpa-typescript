@@ -5,7 +5,7 @@
  */
 
 import { EMPTY_FUNCTION } from '../../constant';
-import { getTransitionEvent } from '@utils/device';
+import { getAnimationEvent } from '@utils/device';
 import { TipOptions } from 'interface';
 
 export default class Tip {
@@ -20,7 +20,7 @@ export default class Tip {
 
     private $dom: HTMLElement;
     private $domClosable: HTMLElement;
-    private transitionEvent: string;
+    private animationEvent: string;
     private timeId: any;
     
     constructor (options: TipOptions) {
@@ -30,7 +30,7 @@ export default class Tip {
         // rebind 
         this.handleTransitionEnd = this.handleTransitionEnd.bind(this);
         this.handleCloseClick = this.handleCloseClick.bind(this);
-        this.transitionEvent = getTransitionEvent();
+        this.animationEvent = getAnimationEvent();
         this.bindEvents();
 
         if (options.duration) {
@@ -63,14 +63,14 @@ export default class Tip {
     }
 
     private bindEvents () {
-        this.$dom.addEventListener(this.transitionEvent, this.handleTransitionEnd);
+        this.$dom.addEventListener(this.animationEvent, this.handleTransitionEnd);
         if (this.$domClosable) {
             this.$domClosable.addEventListener('click', this.handleCloseClick);
         }
     }
 
     private unbindEvents () {
-        this.$dom.removeEventListener(this.transitionEvent, this.handleTransitionEnd);
+        this.$dom.removeEventListener(this.animationEvent, this.handleTransitionEnd);
         if (this.$domClosable) {
             this.$domClosable.removeEventListener('click', this.handleCloseClick);
         }

@@ -8,12 +8,14 @@
         text-align: center;
     }
     &-title{
-        font-size: 30PX;
+        font-size: 28PX;
     }
     &-description{
         text-align: center;
         font-size: $fontSizeL;
         margin: 20PX 0;
+        padding: 0px 20PX;
+        line-height: 1.5;
     }
     &-more{
         text-decoration: underline;
@@ -25,7 +27,7 @@
     padding: 100px 0 110px 0;
     text-align: center;
     &-title{
-        font-size: 30px;
+        font-size: 16PX;
         font-weight: 300;
     }
     &-description{
@@ -41,12 +43,14 @@
     }
 }
 .supports{
-    width: 600px;
+    width: 90%;
+    max-width: 600PX;
     text-align: left;
     margin: 0px auto;
     color: #333333;
     font-size: 16PX;
     line-height: 2.0;
+    box-sizing: border-box;
     li{
         padding: 5PX 10px;
         &:nth-child(odd){
@@ -62,10 +66,31 @@
 pre{
     background-color: #000000;
     color: #999999;
-    width: 600PX;
+    width: 90%;
+    max-width: 600PX;
     border-radius: 5PX;
     padding: 10PX;
     text-align: left;
     padding: 20PX;
     margin: 0px auto;
+    box-sizing: border-box;
+}
+
+.button-groups{
+    width: 90%;
+    max-width: 600PX;
+    margin: 0px auto;
+    .btn{
+        margin-bottom: 10PX;
+    }
+}
+
+@media screen and (max-width:768px) {
+    .button-groups{
+        .btn{
+            width: 100%;
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+    }
 }
