@@ -7,13 +7,13 @@
 import { ShareInfo } from '../../../interface';
 import { getAnimationEvent } from '@utils/device';
 import { loadScript } from '@utils/index';
-import { ajax as Ajax } from '../ajax';
+import { ajax, jsonp } from '../ajax';
 import Share from './share';
 
 // window property
 declare global {
     interface Window {
-        __wx__: any
+        wx: any
     }
 };
 
@@ -43,10 +43,10 @@ export default class WeChat extends Share {
     private async handleLoadSignature (tokenUrl: string) {
         // load wechat sdk
         await loadScript ('//res.wx.qq.com/open/js/jweixin-1.2.0.js');
-        this.wechat = window.__wx__;
+        this.wechat = window.wx;
 
         // request wechat token
-        const result =  await Ajax({
+        const result =  await jsonp({
             url: tokenUrl,
             dataType: 'json',
             data: {
@@ -77,7 +77,7 @@ export default class WeChat extends Share {
             console.log(error);
         });
 
-        this.wechat.ready(function () {
+        this.wechat.ready(() => {
             ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ',
             'onMenuShareWeibo', 'onMenuShareQZone'].map((platItem) => {
                 this.wechat[platItem]({
@@ -95,7 +95,7 @@ export default class WeChat extends Share {
         });
     }
 
-    public previewImage (images, currentIndex): void {
+    public previewImage (images: Array<string>, currentIndex: number): void {
         this.wechat.previewImage({
             images,
             current: images[currentIndex]

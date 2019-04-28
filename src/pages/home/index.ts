@@ -93,6 +93,14 @@ new App({
             link: 'http://www.shuxia123.com',
             imgUrl: 'http://assets.shuxia123.com/uploads/2019/1554004957941_width_748_height_500.jpg'
         };
+        // ('wechatShareTokenUrl', qqAppid, shareInfo)
         this.share = new Share('', null, shareInfo);
+
+        // 测试ajax 请求
+        this.$ajax({
+            url: 'http://www.shuxia123.com/services/demos'
+        }).then((result: any) => {
+            console.log(result);
+        });
     }
 });

@@ -21,7 +21,7 @@ const defaultAjaxOption: AjaxOptions = {
 };
 
 export const ajax = (options: AjaxOptions) => {
-    options = {...options, ...defaultAjaxOption};
+    options = { ...defaultAjaxOption, ...options };
     const xmlHttp: XMLHttpRequest = new XMLHttpRequest();
 
     // define request data
@@ -39,10 +39,9 @@ export const ajax = (options: AjaxOptions) => {
     
     // define request header
     options.token !== '' && xmlHttp.setRequestHeader('Authorization', options.token);
+    xmlHttp.open(options.method, options.url, options.async);
     xmlHttp.setRequestHeader('Content-Type', options.contentType);
     xmlHttp.setRequestHeader('Accept', options.dataType);
-    
-    xmlHttp.open(options.method, options.url, options.async);
 
     // when cross domain, set withCredentials to send cookies
     if (options.xhrFields.withCredentials) {
@@ -89,11 +88,11 @@ export const jsonp = (options: JsonpOptions) => {
     const allKeys = Object.keys(options.data);
     const strQuery = allKeys.map(key => { 
         if (key !== 'callback') {
-            return `${key} = ${options.data[key]}`;
+            return `${key}=${options.data[key]}`;
         }
     }).join('&');
 
-    const url = `${options.url}${options.url.indexOf('?')> -1 ? '&' : '?'}${strQuery}`;
+    const url = `${options.url}${options.url.indexOf('?')> -1 ? '&' : '?'}callback=${jsonpCallback}&${strQuery}`;
     script.setAttribute('src', url);
     
     return new Promise ((resolve, reject) => {
@@ -102,6 +101,6 @@ export const jsonp = (options: JsonpOptions) => {
             document.head.removeChild(script);
             resolve(data);
         };
-        document.head.append(script);
+        document.head.appendChild(script);
     });
 };
