@@ -4,14 +4,7 @@
 ## Install
 
 ```bash
-# install my cli tool
-npm install -g @coocss/cli
-
-# 创建一个目录，项目可自定义
-coocss create html5
-
 # 安装依赖
-cd html5
 npm install
 
 # 开始开发
