@@ -49,6 +49,7 @@ module.exports = function webpackBaseConfig (NODE_ENV = 'development') {
                     test: /\.(png|jpg|gif|svg)$/,
                     loader: 'url-loader',
                     query: {
+                        limit: 1,
                         publicPath: config.imgPath,
                         name: `${config.filePath}images/${config.filenameHash ? '[name].[hash:8]' : '[name]'}.[ext]`
                     }
