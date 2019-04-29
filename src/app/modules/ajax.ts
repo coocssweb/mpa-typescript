@@ -6,22 +6,10 @@
 import { AjaxOptions, ContentType, XhrFields, JsonpOptions } from '../../interface';
 
 /**
- * ajax support
+ * ajax
  */
-const defaultAjaxOption: AjaxOptions = {
-    url: '',
-    method: 'get',
-    data: {},
-    contentType: ContentType.Urlencoded,
-    xhrFields: {
-        withCredentials: false
-    },
-    token: '',
-    async: true
-};
-
-export const ajax = (options: AjaxOptions) => {
-    options = { ...defaultAjaxOption, ...options };
+function Ajax(options: AjaxOptions): Promise<any> {
+    options = { ...Ajax.defaultOptions, ...options };
     const xmlHttp: XMLHttpRequest = new XMLHttpRequest();
 
     // define request data
@@ -66,23 +54,31 @@ export const ajax = (options: AjaxOptions) => {
     });
 };
 
-/**
- * jsonp support
- */
-const defaultJsonpOptions: JsonpOptions = {
+Ajax.defaultOptions = {
     url: '',
-    data: {}
+    method: 'get',
+    data: {},
+    contentType: ContentType.Urlencoded,
+    xhrFields: {
+        withCredentials: false
+    },
+    token: '',
+    async: true
 };
-let _jsonpId = 0;
 
-export const jsonp = (options: JsonpOptions) => {
-    options = { ...defaultJsonpOptions, ...options };
+export const ajax = Ajax;
+
+/**
+ * jsonp
+ */
+function Jsonp (options: JsonpOptions): Promise<any> {
+    options = { ...Jsonp.defaultOptions, ...options };
     if (!options.url) {
         return Promise.resolve(null);
     }
 
     const script = document.createElement('script');
-    const jsonpCallback = `jsonp_${_jsonpId++}`;
+    const jsonpCallback = `jsonp_${Jsonp.jsonpId++}`;
     options.jsonpCallback = jsonpCallback;
     
     const allKeys = Object.keys(options.data);
@@ -104,3 +100,12 @@ export const jsonp = (options: JsonpOptions) => {
         document.head.appendChild(script);
     });
 };
+
+Jsonp.defaultOptions = {
+    url: '',
+    data: {}
+};
+
+Jsonp.jsonpId = 0;
+
+export const jsonp = Jsonp;

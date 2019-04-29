@@ -16,7 +16,7 @@ declare global {
         wx: any
     }
 };
-
+// declare let window: any;
 export default class WeChat extends Share {
     static prefix = 'globalShare';
     private $domShare: HTMLElement;

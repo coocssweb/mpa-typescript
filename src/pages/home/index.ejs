@@ -29,18 +29,18 @@
         <p class="feature-description">利用NPM安装起来很简便</p>
         <div class="feature-show">
 <pre>
-# install my cli tool
-npm install -g @coocss/cli
-
-# 创建一个目录，项目可自定义
-coocss create html5
-
 # 安装依赖
-cd html5
 npm install
 
 # 开始开发
 npm start
+
+# 如果你开发完了，可以发布测试 或者 发布生产
+# 发布测试
+npm run build:test
+
+# 发布生产
+npm run build
 </pre>
         </div>
     </section>

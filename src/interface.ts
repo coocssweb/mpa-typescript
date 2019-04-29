@@ -30,7 +30,7 @@ export interface AjaxOptions {
     url?: string,
     data?: object,
     dataType?: string, 
-    contentType?: string, 
+    contentType?: ContentType, 
     method?: string,
     xhrFields?: XhrFields,
     token?: string,

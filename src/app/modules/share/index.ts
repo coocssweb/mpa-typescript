@@ -9,7 +9,7 @@ import QQ from './qq';
 import Browser from './browser';
 import IS from '@utils/is';
 import Share from './share';
-const _is = IS();
+
 
 export default class Index {
     private shareInfo: ShareInfo;
@@ -24,11 +24,12 @@ export default class Index {
 
     constructor (tokenUrl?: string, appId?: string, shareInfo?: ShareInfo) {
         shareInfo = { ...Index.defaultShareInfo, ...shareInfo };
-        
-        if (_is.isWechat()) {
+        const is = IS();
+
+        if (is.isWechat()) {
             this.platform = new Wechat(tokenUrl, shareInfo);
         } 
-        else if (_is.isQQ()) {
+        else if (is.isQQ()) {
             this.platform = new QQ(appId, shareInfo);
         } 
         else {
