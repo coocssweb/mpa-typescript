@@ -3,7 +3,7 @@
  * @author: 王佳欣
  * @email: 1974740999@qq.com
  */
-import '@scss/globalLoading.scss';
+import '@scss/base/globalLoading.scss';
 import { loadImages } from '@utils/index';
 import { getAnimationEvent } from '@utils/device';
 import { EMPTY_FUNCTION } from '../../constant';

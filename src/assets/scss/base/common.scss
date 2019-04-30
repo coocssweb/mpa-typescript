@@ -1,13 +1,13 @@
-@import "base/normalize";
-@import "base/variables";
-@import "base/button";
-@import "base/animation";
-@import "globalMask";
-@import "globalTip";
-@import "globalConfirm";
-@import "globalShare";
-@import "globalHeader";
-@import "globalFooter";
+@import "./normalize";
+@import "./variables";
+@import "./button";
+@import "./animation";
+@import "./globalMask";
+@import "./globalTip";
+@import "./globalConfirm";
+@import "./globalShare";
+@import "./globalHeader";
+@import "./globalFooter";
 
 html, body{
     background: transparent;

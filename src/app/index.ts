@@ -1,4 +1,4 @@
-import '@scss/common.scss';
+import '@scss/base/common.scss';
 import App from './app';
 
 interface AppOptions {
