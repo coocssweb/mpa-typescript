@@ -9,14 +9,14 @@ import { getAnimationEvent } from '@utils/device';
 import { TipOptions } from 'interface';
 
 export default class Tip {
-    static defaultOptions: TipOptions = {
+    static readonly defaultOptions: TipOptions = {
         message: '',
         duration: 3000,
         theme: 'default',
         closable: false,
         callback: EMPTY_FUNCTION
     };
-    static prefix = 'globalTip';
+    static readonly prefix = 'globalTip';
 
     private timeId: any;
     private animationEvent: string;

@@ -9,6 +9,7 @@ import { EMPTY_FUNCTION } from '../../constant';
 import { ConfirmOptions } from '../../interface';
 
 export default class Confirm {
+    static readonly prefix = 'globalConfirm';
     static defaultOptions: ConfirmOptions = {
         title: '',
         closable: true,
@@ -19,7 +20,6 @@ export default class Confirm {
         okCallback: EMPTY_FUNCTION,
         cancelCallback: EMPTY_FUNCTION,
     };
-    static prefix = 'globalConfirm';
 
     private options: ConfirmOptions;
     private transitionEvent: string;

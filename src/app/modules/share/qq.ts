@@ -21,7 +21,7 @@ export default class QQ extends Share {
         super();
         this.shareInfo = shareInfo;
         this.loadQQ(appId).then(() => {
-            this.setShareInfo();
+            this.setShareInfo(this.shareInfo);
         });
     }
 
@@ -30,8 +30,8 @@ export default class QQ extends Share {
         this.qq = window.__mqq__;
     }
 
-    public setShareInfo () {
-        let {title, desc, link, imgUrl} = this.shareInfo;
+    public setShareInfo (shareInfo: ShareInfo) {
+        let {title, desc, link, imgUrl} = shareInfo;
         this.qq.data.setShareInfo({
             title,
             desc,
@@ -40,7 +40,7 @@ export default class QQ extends Share {
         });
     }
 
-    public callShare () {
+    callShare () {
         this.qq.ui.showShareMenu();
     }
 }

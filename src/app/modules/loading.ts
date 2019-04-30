@@ -9,7 +9,7 @@ import { getAnimationEvent } from '@utils/device';
 import { EMPTY_FUNCTION } from '../../constant';
 
 export default class Loading {
-    static prefix = 'globalLoading';
+    static readonly prefix = 'globalLoading';
 
     private haveLoadedPercent: number = 0;
     private haveLoadedCount: number = 0;

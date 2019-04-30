@@ -15,7 +15,7 @@ export default class Index {
     private shareInfo: ShareInfo;
     private platform: Share;
 
-    static defaultShareInfo: ShareInfo = {
+    static readonly defaultShareInfo: ShareInfo = {
         title: document.title,
         desc: '',
         link: window.location.href,

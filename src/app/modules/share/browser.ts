@@ -9,7 +9,7 @@ import { isNodeFound } from '@utils/domHelper';
 import Share from './share';
 
 export default class Browser extends Share {
-    static prefix = 'globalShare';
+    static readonly prefix = 'globalShare';
     private $domShare: HTMLElement;
     private $domWeibo: Node;
     private $domQzone: Node;

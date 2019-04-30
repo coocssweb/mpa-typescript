@@ -1,5 +1,5 @@
 /**
- * @file utils/ajax.ts ajax网络请求
+ * @file utils/ajax.ts ajax、jsonp 网络请求
  * @author: 王佳欣
  * @email: 1974740999@qq.com
  */

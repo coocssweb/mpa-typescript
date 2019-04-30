@@ -2,7 +2,7 @@ import { getAnimationEvent } from '@utils/device';
 
 export default class Mask {
     private static $domMask: HTMLElement;
-    private static prefix = 'globalMask';
+    private  static readonly prefix = 'globalMask';
     private static animationEvent = getAnimationEvent();
 
     static open () {
