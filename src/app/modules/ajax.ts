@@ -58,6 +58,7 @@ Ajax.defaultOptions = {
     url: '',
     method: 'get',
     data: {},
+    dataType: 'json',
     contentType: ContentType.Urlencoded,
     xhrFields: {
         withCredentials: false

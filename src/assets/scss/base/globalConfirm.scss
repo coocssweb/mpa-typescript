@@ -46,14 +46,14 @@
         width: 100%;
         padding-left: 0px;
         padding-right: 0px;
-        @extend .btn;
-        @extend .btn--large;
+        @extend .globalBtn;
+        @extend .globalBtn--large;
         &--ok{
-            @extend .btn-primary;
+            @extend .globalBtn-primary;
             
         }
         &--cancel{
-            @extend .btn-transparent;
+            @extend .globalBtn-transparent;
         }
     }
 }
