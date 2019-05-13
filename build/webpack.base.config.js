@@ -125,12 +125,6 @@ module.exports = function webpackBaseConfig (NODE_ENV = 'development') {
     // 公共代码
     webpackConfig.optimization = {
         splitChunks: {
-            chunks: 'all',
-            minSize: 0,
-            maxAsyncRequests: 5,
-            maxInitialRequests: 3,
-            automaticNameDelimiter: '-',
-            name: 'common',
             cacheGroups: {
                 app: {
                     test: /[\\/]src\/app[\\/]/,
@@ -144,6 +138,13 @@ module.exports = function webpackBaseConfig (NODE_ENV = 'development') {
                     chunks: 'all',
                     name: 'vendor',
                     minChunks: 1,
+                    priority: 10
+                },
+                common: {
+                    test: /[\\/]src[\\/]/,
+                    chunks: 'all',
+                    name: 'common',
+                    minChunks: 3,
                     priority: 10
                 }
             }
