@@ -80,14 +80,14 @@ pre{
     width: 90%;
     max-width: 600PX;
     margin: 0px auto;
-    .btn{
+    .globalBtn{
         margin-bottom: 10PX;
     }
 }
 
 @media screen and (max-width:768px) {
     .button-groups{
-        .btn{
+        .globalBtn{
             width: 100%;
             padding-left: 0px;
             padding-right: 0px;
