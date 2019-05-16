@@ -28,7 +28,7 @@ export interface XhrFields{
 
 export interface AjaxOptions {
     url?: string,
-    data?: object,
+    data?: any,
     dataType?: string, 
     contentType?: ContentType, 
     method?: string,

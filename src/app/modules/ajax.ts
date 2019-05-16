@@ -12,11 +12,10 @@ function Ajax(options: AjaxOptions): Promise<any> {
     options = { ...Ajax.defaultOptions, ...options };
     const xmlHttp: XMLHttpRequest = new XMLHttpRequest();
 
-    let strQuery: string;
     // define request data
     if (options.contentType = ContentType.Urlencoded) {
         const keysOfData = Object.keys(options.data);
-        strQuery = keysOfData.map(key => { 
+        const strQuery = keysOfData.map(key => { 
             return `${key}=${options.data[key]}`
         }).join('&');
     
@@ -24,6 +23,9 @@ function Ajax(options: AjaxOptions): Promise<any> {
             options.url = options.url.indexOf('?') > -1 
                             ? `${options.url}&${strQuery}`
                             : `${options.url}?${strQuery}`;
+        }
+        else if (options.method === 'post') {
+            options.data = strQuery;
         }
     }
     
@@ -52,7 +54,7 @@ function Ajax(options: AjaxOptions): Promise<any> {
             }
         };
 
-        xmlHttp.send(options.method === 'get' ? null : strQuery);
+        xmlHttp.send(options.data ? options.data : null);
     });
 };
 
@@ -81,7 +83,7 @@ function Jsonp (options: JsonpOptions): Promise<any> {
     }
 
     const script = document.createElement('script');
-    const jsonpCallback = `jsonp_${Jsonp.jsonpId++}`;
+    const jsonpCallback = `jsonp_${+new Date()}`;
     options.jsonpCallback = jsonpCallback;
     
     const allKeys = Object.keys(options.data);
@@ -108,7 +110,5 @@ Jsonp.defaultOptions = {
     url: '',
     data: {}
 };
-
-Jsonp.jsonpId = 0;
 
 export const jsonp = Jsonp;
