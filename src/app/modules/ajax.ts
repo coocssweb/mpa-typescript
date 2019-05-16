@@ -12,17 +12,19 @@ function Ajax(options: AjaxOptions): Promise<any> {
     options = { ...Ajax.defaultOptions, ...options };
     const xmlHttp: XMLHttpRequest = new XMLHttpRequest();
 
+    let strQuery: string;
     // define request data
-    let requestData: any;
-    if (options.contentType === ContentType.Urlencoded) {
-        const allKeys = Object.keys(options.data);
-
-        requestData = allKeys.map(key => { 
-            return `${key} = ${options.data[key]}`
+    if (options.contentType = ContentType.Urlencoded) {
+        const keysOfData = Object.keys(options.data);
+        strQuery = keysOfData.map(key => { 
+            return `${key}=${options.data[key]}`
         }).join('&');
-    } 
-    else if (options.contentType = ContentType.FormData) {
-        requestData = options.data;
+    
+        if (options.method === 'get') {
+            options.url = options.url.indexOf('?') > -1 
+                            ? `${options.url}&${strQuery}`
+                            : `${options.url}?${strQuery}`;
+        }
     }
     
     // define request header
@@ -50,7 +52,7 @@ function Ajax(options: AjaxOptions): Promise<any> {
             }
         };
 
-        xmlHttp.send(requestData);
+        xmlHttp.send(options.method === 'get' ? null : strQuery);
     });
 };
 

@@ -3,9 +3,9 @@ interface Options {
     src: string,
     autoPlay: boolean,
     loop: boolean,
-    onPlay: Function,
-    onPause: Function,
-    onEnded: Function
+    onPlay?: Function,
+    onPause?: Function,
+    onEnded?: Function
 };
 
 export default class Audio {
@@ -22,7 +22,7 @@ export default class Audio {
     private element: HTMLAudioElement;
 
     constructor (options: Options) {
-        options = { ...options, ...Audio.defaultOptions };
+        options = {...Audio.defaultOptions,  ...options };
         this.element = this.createAudioElement(options);
     }
 

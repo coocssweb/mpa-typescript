@@ -1,6 +1,8 @@
 import '@scss/home.scss';
 import App from '@app';
 import Share from '@modules/share/index';
+import Audio from '@modules/audio';
+
 // you can create an other app
 // other create a new app, it has independent data and watchs..., 
 // if you need create a app just when you need
@@ -83,9 +85,17 @@ new App({
         document.querySelector('.btn-open').addEventListener('click', () => {
             this.$router.push('/demo.html');
         });
+
+        // play a audio
+        document.querySelector('.btn-audio').addEventListener('click', () => {
+            this.audio.isPlaying 
+                ? this.audio.pause() 
+                : this.audio.play();
+        });
     },
 
     init () {
+        this.$btnAudio = document.querySelector('.btn-audio');
         // 测试分享模块
         const shareInfo = {
             title: '测试分享标题',
@@ -98,9 +108,29 @@ new App({
 
         // 测试ajax 请求
         this.$ajax({
-            url: 'http://www.shuxia123.com/services/demos'
+            url: 'http://www.shuxia123.com/services/demos',
+            method: 'post',
+            data: {
+                name: 'test'
+            }
         }).then((result: any) => {
             console.log(result);
         });
+
+        const that = this;
+        this.audio = new Audio({ 
+            src: 'https://h5.meitu.com/meituskin/h5/static_photos/iloveyou/music.mp3',
+            autoPlay: false,
+            loop: true,
+            onPlay () {
+                that.$btnAudio.innerHTML = '暂停音频';
+            },
+            onPause () {
+                that.$btnAudio.innerHTML = '重新播放';
+            },
+            onEnded () {
+                that.$btnAudio.innerHTML = '播放结束';
+            }
+         });
     }
 });
