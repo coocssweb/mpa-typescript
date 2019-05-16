@@ -1,4 +1,4 @@
-import { Tip, Confirm, Router, Statistic, proxy, ajax, jsonp } from './modules/index';
+import { Tip, Confirm, Router, Statistic, proxy, ajax, jsonp, Storage } from './modules/index';
 import URI from '@utils/uri';
 import { EMPTY_FUNCTION } from '../constant';
 import { AjaxOptions, JsonpOptions, TipOptions, ConfirmOptions } from '../interface';
@@ -19,6 +19,7 @@ function App (data: object, watchs: object) {
     this.$router = Router;
     this.$route = URI.parse(window.location.href);
     this.$statistic = Statistic;
+    this.$storage = Storage;
 }
 
 App.prototype = {

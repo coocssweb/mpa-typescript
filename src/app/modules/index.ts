@@ -3,8 +3,8 @@ import Loading from './loading';
 import Router from './router';
 import Confirm from './confirm';
 import proxy from './proxy';
-import Share from './share/index';
 import Statistic from './statistic';
+import Storage from './storage';
 import { ajax, jsonp } from './ajax';
 
 export {
@@ -12,9 +12,9 @@ export {
     Loading,
     Router,
     Confirm,
-    Share,
     Statistic,
     proxy,
     ajax,
-    jsonp
+    jsonp,
+    Storage
 };

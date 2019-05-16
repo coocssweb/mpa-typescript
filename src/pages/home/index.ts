@@ -2,6 +2,7 @@ import '@scss/home.scss';
 import App from '@app';
 import Share from '@modules/share/index';
 import Audio from '@modules/audio';
+import Storage from '@modules/storage';
 
 // you can create an other app
 // other create a new app, it has independent data and watchs..., 
@@ -88,6 +89,7 @@ new App({
 
         // play a audio
         document.querySelector('.btn-audio').addEventListener('click', () => {
+            this.audio.ok();
             this.audio.isPlaying 
                 ? this.audio.pause() 
                 : this.audio.play();
@@ -96,7 +98,7 @@ new App({
 
     init () {
         this.$btnAudio = document.querySelector('.btn-audio');
-        // 测试分享模块
+        // demo code for share
         const shareInfo = {
             title: '测试分享标题',
             desc: '测试分享描述',
@@ -106,10 +108,10 @@ new App({
         // ('wechatShareTokenUrl', qqAppid, shareInfo)
         this.share = new Share('', null, shareInfo);
 
-        // 测试ajax 请求
+        // demo code for ajax
         this.$ajax({
             url: 'http://www.shuxia123.com/services/demos',
-            method: 'post',
+            method: 'get',
             data: {
                 name: 'test'
             }
@@ -117,6 +119,7 @@ new App({
             console.log(result);
         });
 
+        // demo code for audio
         const that = this;
         this.audio = new Audio({ 
             src: 'https://h5.meitu.com/meituskin/h5/static_photos/iloveyou/music.mp3',
@@ -131,6 +134,10 @@ new App({
             onEnded () {
                 that.$btnAudio.innerHTML = '播放结束';
             }
-         });
+        });
+
+        // demo code for storage, expired at 60s
+        this.$storage.setItem('name', 'wangjx', 1000 * 60);
+        console.log(this.$storage.getItem('name'));
     }
 });
