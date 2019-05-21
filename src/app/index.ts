@@ -15,10 +15,8 @@ export default class Instance {
         const optionsExtend = {
             ... options
         };
+        const { data, watchs, ...reset } = optionsExtend;
         
-        delete optionsExtend.data;
-        delete optionsExtend.watchs;
-
-        return new (App.extends(optionsExtend))(options.data,options.watchs);
+        return new (App.extends(reset))(options.data,options.watchs);
     }
 }
