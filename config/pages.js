@@ -1,5 +1,7 @@
 const { resolve } = require('../build/utils');
 
+console.log(resolve('src/pages', 'demo/index.ts'));
+
 module.exports = [
     {
         name: 'home',

@@ -149,6 +149,7 @@ module.exports = function webpackBaseConfig (NODE_ENV = 'development') {
                 }
             }
         },
+        moduleIds: 'hashed',
         runtimeChunk: {
             name: 'manifest',
         }
@@ -183,12 +184,6 @@ module.exports = function webpackBaseConfig (NODE_ENV = 'development') {
             })
         );
 
-        webpackConfig.plugins.push(
-            new webpack.HashedModuleIdsPlugin()
-        );
-        webpackConfig.plugins.push(
-            new webpack.NamedChunksPlugin()
-        );
         webpackConfig.plugins.push(
             new CopyrightPlugin(`/**\n * 作者: 王佳欣\n * 站点: http://www.shuxia123.com\n */`)
         );
