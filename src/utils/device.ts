@@ -4,7 +4,7 @@
  * @email: 1974740999@qq.com
  */
 
-export const getTransitionEvent = () => {
+export let getTransitionEvent = () => {
     let el = document.createElement('fake_a_element');
     
     let transitions = {
@@ -16,12 +16,15 @@ export const getTransitionEvent = () => {
 
     for (let transition in transitions) {
         if (el.style[transition] !== undefined) {
+            getTransitionEvent = () => {
+                return transitions[transition];    
+            };
             return transitions[transition];
         }
     }
 };
 
-export const getAnimationEvent = () => {
+export let getAnimationEvent = () => {
     let el = document.createElement('fake_a_element');
     
     let animations = {
@@ -33,6 +36,9 @@ export const getAnimationEvent = () => {
 
     for (let animation in animations) {
         if (el.style[animation] !== undefined) {
+            getAnimationEvent = () => {
+                return animations[animation];    
+            }
             return animations[animation];
         }
     }

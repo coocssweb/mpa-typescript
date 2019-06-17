@@ -34,7 +34,7 @@ export default class Audio {
                 }
                 finally 
                 {
-                    userEvent(event);
+                    userEvent(event); 
                 }
             };
         };

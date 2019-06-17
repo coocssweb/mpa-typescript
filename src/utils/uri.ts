@@ -6,7 +6,6 @@
 
 import { Uri } from '../interface';
 export default class URI {
-    
     private static stringifyQuery (queries: Object): string {
         return Object.keys(queries).map(key => {
             return `${key}=${queries[key]}`

@@ -89,7 +89,6 @@ new App({
 
         // play a audio
         document.querySelector('.btn-audio').addEventListener('click', () => {
-            this.audio.ok();
             this.audio.isPlaying 
                 ? this.audio.pause() 
                 : this.audio.play();

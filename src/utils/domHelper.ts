@@ -22,37 +22,32 @@ export const isNodeFound = (current: Node, parentNode: Node): boolean => {
 
 // get browser's scrollbar width
 // this can help to improve user experience
-export const getScrollbarWidth = () => {
-    let scrollBarWidth: number;
-    return (() => {
-        if (window.innerHeight >= document.body.offsetHeight) {
-            return 0;
-        }
-    
-        if (scrollBarWidth !== undefined) {
-            return scrollBarWidth;
-        }
-    
-        const outer = document.createElement('div');
-        outer.className = 'scrollbar__wrap';
-        outer.style.visibility = 'hidden';
-        outer.style.width = '100px';
-        outer.style.position = 'absolute';
-        outer.style.top = '-9999px';
-        document.body.appendChild(outer);
-    
-        const widthNoScroll = outer.offsetWidth;
-        outer.style.overflow = 'scroll';
-    
-        const inner = document.createElement('div');
-        inner.style.width = '100%';
-        outer.appendChild(inner);
-    
-        const widthWithScroll = inner.offsetWidth;
-        outer.parentNode.removeChild(outer);
-        scrollBarWidth = widthNoScroll - widthWithScroll;
+export let getScrollbarWidth = () => {
+    if (window.innerHeight >= document.body.offsetHeight) {
+        return 0;
+    }
+    const outer = document.createElement('div');
+    outer.className = 'scrollbar__wrap';
+    outer.style.visibility = 'hidden';
+    outer.style.width = '100px';
+    outer.style.position = 'absolute';
+    outer.style.top = '-9999px';
+    document.body.appendChild(outer);
+
+    const widthNoScroll = outer.offsetWidth;
+    outer.style.overflow = 'scroll';
+
+    const inner = document.createElement('div');
+    inner.style.width = '100%';
+    outer.appendChild(inner);
+
+    const widthWithScroll = inner.offsetWidth;
+    outer.parentNode.removeChild(outer);
+    const scrollBarWidth = widthNoScroll - widthWithScroll;
+    getScrollbarWidth = () => {
         return scrollBarWidth;
-    })();
+    };
+    return scrollBarWidth;
 };
 
 
