@@ -86,27 +86,28 @@ export default class Confirm {
     }
 
     private createFooterElement (): HTMLElement {
-        let domFooter: HTMLElement;
+        const hasConfirmFooter = this.options.okLabel || this.options.cancelLabel;
+        if (!hasConfirmFooter) {
+            return;
+        }
+        
+        let domFooter = document.createElement('div');
+        domFooter.classList.add(`${Confirm.prefix}-footer`);
 
-        if (this.options.okLabel || this.options.cancelLabel) {
-            domFooter = document.createElement('div');
-            domFooter.classList.add(`${Confirm.prefix}-footer`);
+        if (this.options.okLabel) {
+            this.$domOk = document.createElement('button');
+            this.$domOk.innerHTML = this.options.okLabel;
+            this.$domOk.classList.add(`${Confirm.prefix}-btn`);
+            this.$domOk.classList.add(`${Confirm.prefix}-btn--ok`);
+            domFooter.appendChild(this.$domOk);
+        }
 
-            if (this.options.okLabel) {
-                this.$domOk = document.createElement('button');
-                this.$domOk.innerHTML = this.options.okLabel;
-                this.$domOk.classList.add(`${Confirm.prefix}-btn`);
-                this.$domOk.classList.add(`${Confirm.prefix}-btn--ok`);
-                domFooter.appendChild(this.$domOk);
-            }
-
-            if (this.options.cancelLabel) {
-                this.$domCancel = document.createElement('button');
-                this.$domCancel.innerHTML = this.options.cancelLabel;
-                this.$domCancel.classList.add(`${Confirm.prefix}-btn`);
-                this.$domCancel.classList.add(`${Confirm.prefix}-btn--cancel`);
-                domFooter.appendChild(this.$domCancel);
-            }
+        if (this.options.cancelLabel) {
+            this.$domCancel = document.createElement('button');
+            this.$domCancel.innerHTML = this.options.cancelLabel;
+            this.$domCancel.classList.add(`${Confirm.prefix}-btn`);
+            this.$domCancel.classList.add(`${Confirm.prefix}-btn--cancel`);
+            domFooter.appendChild(this.$domCancel);
         }
 
         return domFooter;

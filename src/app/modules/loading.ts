@@ -66,7 +66,7 @@ export default class Loading {
         this.$loadingProgress && (this.$loadingProgress.style.width = `${this.haveLoadedPercent}%`);
     }
 
-    private countDown (timeout: number): void {
+    private countDown (timestamp: number): void {
         setTimeout(() => {
             this.setLoadingStatus();
             
@@ -74,23 +74,23 @@ export default class Loading {
                 && this.haveLoadedPercent !== 80
                 && this.haveLoadedPercent < 100) {
                 this.haveLoadedPercent += 1;
-                this.countDown(timeout);
+                this.countDown(timestamp);
             } 
             else if (this.haveLoadedPercent === 50) {
                 // 加载50% 做假暂停
                 this.haveLoadedPercent += this.haveLoadedHalf ? 1 : 0;
-                this.countDown(timeout);
+                this.countDown(timestamp);
             } 
             else if (this.haveLoadedPercent === 80) {
                 // 加载80% 做假暂停
                 this.haveLoadedPercent += this.haveLoaded ? 1 : 0;
-                this.countDown(timeout);
+                this.countDown(timestamp);
             } 
             else if (this.haveLoadedPercent > 99) {
                 this.loadedCallback();
                 this.handleLoadEnd();
             }
-        }, timeout);
+        }, timestamp);
     }
 
     public start (): void {
