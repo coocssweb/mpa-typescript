@@ -1,7 +1,8 @@
 {
     "presets": [
         [ "stage-1"],
-        ["es2015", {"modules": false}]
+        ["es2015", {"modules": false}],
+        "@babel/preset-typescript"
     ],
     "plugins": ["transform-runtime"]
 }

@@ -4,10 +4,8 @@
  * @email: 1974740999@qq.com
  */
 
-import Is from '@utils/is';
+import IS from '@utils/is';
 import URI from '@utils/uri';
-const _is = Is();
-const IS_IOS = _is.isIos();
 
 export default class Router {
     
@@ -40,7 +38,7 @@ export default class Router {
 
     public static goBack () {
         // 如果有referrer来路，需要强制重新加载
-        if (IS_IOS && document.referrer) {
+        if (IS.isIos() && document.referrer) {
             Router.replace(document.referrer);
         } 
         else {

@@ -24,12 +24,11 @@ export default class Index {
 
     constructor (tokenUrl?: string, appId?: string, shareInfo?: ShareInfo) {
         shareInfo = { ...Index.defaultShareInfo, ...shareInfo };
-        const is = IS();
 
-        if (is.isWechat()) {
+        if (IS.isWechat()) {
             this.platform = new Wechat(tokenUrl, shareInfo);
         } 
-        else if (is.isQQ()) {
+        else if (IS.isQQ()) {
             this.platform = new QQ(appId, shareInfo);
         } 
         else {
