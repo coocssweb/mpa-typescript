@@ -6,7 +6,7 @@ describe('test utils/is', () => {
     });
 
     test('test Is.isWechat func', () => {
-        expect(Is.isWeibo()).toBe(false);
+        expect(Is.isWechat()).toBe(false);
     });
 
     test('test Is.isQQ func', () => {

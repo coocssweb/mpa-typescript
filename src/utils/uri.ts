@@ -16,17 +16,17 @@ export default class URI {
         let port = 80;
         let hostname = '';
         url = url.replace(/\/\//ig, '/');
-        let pos = url.indexOf('/');
+        hostname = url;
 
-        if (pos !== -1) {
-            hostname = url.substring(0, pos);
+        let indexOfPath = url.indexOf('/');
+        if (indexOfPath !== -1) {
+            hostname = url.substring(0, indexOfPath);
         }
-    
-        pos = hostname.indexOf(':');
 
-        if (pos !== -1) {
-            port = parseInt(hostname.substring(pos + 1, hostname.length) || '80');
-            hostname = hostname.substring(0, pos);
+        indexOfPath = hostname.indexOf(':');
+        if (indexOfPath !== -1) {
+            port = parseInt(hostname.substring(indexOfPath + 1, hostname.length) || '80');
+            hostname = hostname.substring(0, indexOfPath);
         }
 
         return {hostname, port};
@@ -34,7 +34,7 @@ export default class URI {
 
     private static parseQuery (url: string): Object {
         const query = {};
-        const splits = url.split('?');
+        const splits = url.split(/\?|\#/);
 
         if (splits.length > 1) {
             splits[1].split('&').forEach((item) => {
@@ -48,13 +48,14 @@ export default class URI {
 
     private static parsePath (url: string): string {
         let path = '';
-        let pos = url.indexOf('/');
-        let lastPos = url.lastIndexOf('/');
-
-        if (pos > -1 && pos !== lastPos) {
-            path = url.substring(pos, lastPos);
+        const firstIndexOfPath = url.indexOf('/');
+        if (firstIndexOfPath === -1) {
+            return '';
         }
 
+        url = url.replace(/\?|\#/, '?');
+        let lastIndexOfPath = url.indexOf('?') !== -1 ? url.indexOf('?') : url.length;
+        path = url.substring(firstIndexOfPath, lastIndexOfPath);
         return path;
     }
 
@@ -77,11 +78,7 @@ export default class URI {
     }
 
     public static format (uri: Uri): string {
-        const url = `${uri.protocol || 'http'}://
-            ${uri.hostname}
-            ${uri.path}
-            ${URI.stringifyQuery(uri.query)}`;
-            
-        return url;
+        const portStr = uri.port ? `:${uri.port}` : '';
+        return `${uri.protocol || 'http'}://${uri.hostname}${portStr}${uri.path}?${URI.stringifyQuery(uri.query)}`;
     }
 }

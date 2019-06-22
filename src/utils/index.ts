@@ -8,11 +8,20 @@ import { EMPTY_FUNCTION } from '../constant';
 // load javascript
 export const loadScript = (src: string): Promise<any> => {
     return new Promise((resolve, reject) => {
+        const timer = setTimeout(() => {
+            reject('error');
+        }, 5000);
         const script = document.createElement('script');
         script.type = 'text/javascript';
         script.src = src;
-        script.onload = resolve;
-        script.onerror = reject;
+        script.onload = () => {
+            clearTimeout(timer);
+            resolve('sucess');
+        };
+        script.onerror = () => {
+            clearTimeout(timer);
+            reject('error');
+        };
         document.head.appendChild(script);
     });
 };
@@ -37,6 +46,6 @@ export const loadImages = (images: Array<string>, callback: Function = EMPTY_FUN
         };
 
         images.map(load);
-        images.length === 0 && resolve();
+        images.length === 0 && resolve(0);
     });
 };
