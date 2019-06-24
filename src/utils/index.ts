@@ -11,12 +11,13 @@ export const loadScript = (src: string): Promise<any> => {
         const timer = setTimeout(() => {
             reject('error');
         }, 5000);
+        
         const script = document.createElement('script');
         script.type = 'text/javascript';
         script.src = src;
         script.onload = () => {
             clearTimeout(timer);
-            resolve('sucess');
+            resolve('success');
         };
         script.onerror = () => {
             clearTimeout(timer);

@@ -1,27 +1,52 @@
 import  { loadScript, loadImages }  from '../../src/utils/index';
+const LOAD_SUCCESS_SRC = 'LOAD_SUCCESS_SRC';
+const LOAD_FAILURE_SRC = 'LOAD_FAILURE_SRC';
 
-describe('test utils/index', () => {
-    test('test loadScript, url exit', () => {
-        return loadScript('https://www.shuxia123.com/js/index.4cf37435f731b6cd38ab.js').then((response) => {
+describe('test utils/index function loadScript', () => {
+    beforeAll(() => {
+        Object.defineProperty(document.head, 'appendChild', {
+            value: function (element) {
+                if (element.src === `http://localhost/${LOAD_SUCCESS_SRC}`) {
+                    element.onload();
+                } else {
+                    element.onerror();
+                }
+            }
+        });
+    });
+
+    test('test loadScript, success', () => {
+        return loadScript(LOAD_SUCCESS_SRC).then((response) => {
             expect(response).toBe('success');
         });
-    }, 10000);
+    });
 
-    test('test loadScript, url not exit', () => {
-        return loadScript('https://www.shuxia123.com/js/index.444.js').then(null, (error) => {
-            expect(error).toBe(error);
+    test('test loadScript, error', () => {
+        return loadScript(LOAD_FAILURE_SRC).then(null, (response) => {
+            expect(response).toBe('error');
         });
-    }, 10000);
+    });
+});
 
-    // test('test loadImages', () => {
-    //     const mockCallback = jest.fn();
+describe('test utils/index loadImages', () => {
+    beforeAll(() => {
+        Object.defineProperty(Image.prototype, 'src', {
+            set(src) {
+                if (src === LOAD_FAILURE_SRC) {
+                    setTimeout(() => this.onerror(new Error('mocked error')), 0);
+                } else if (src === LOAD_SUCCESS_SRC) {
+                    setTimeout(() => this.onload(), 0);
+                }
+            },
+        });
+    });
 
-    //     return 
-    //         loadImages(['https://www.shuxia123.com/uploads/2019/1560414276274_width_800_height_534.jpg'], mockCallback)
-    //         .then((response) => {
-    //             console.log('134123412341234');
-    //             expect(mockCallback.mock.calls.length).toBe(1);
-    //             expect(response).toBe(1);
-    //         });
-    // });
+    test('test loadImages', () => {
+        const mockCallback = jest.fn();
+        return loadImages([LOAD_FAILURE_SRC, LOAD_FAILURE_SRC], mockCallback)
+            .then((response) => {
+                expect(mockCallback.mock.calls.length).toBe(2);
+                expect(response).toBe(2);
+            });
+    });
 });
