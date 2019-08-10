@@ -2,7 +2,6 @@ import '@scss/home.scss';
 import App from '@app';
 import Share from '@modules/share/index';
 import Audio from '@modules/audio';
-import Storage from '@modules/storage';
 
 // you can create an other app
 // other create a new app, it has independent data and watchs..., 
