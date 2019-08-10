@@ -137,6 +137,5 @@ new App({
 
         // demo code for storage, expired at 60s
         this.$storage.setItem('name', 'wangjx', 1000 * 60);
-        console.log(this.$storage.getItem('name'));
     }
 });
