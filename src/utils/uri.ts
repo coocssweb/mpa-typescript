@@ -39,7 +39,7 @@ export default class URI {
         if (splits.length > 1) {
             splits[1].split('&').forEach((item) => {
                 const values = item.split('=');
-                query[values[0]] = values[1];
+                query[values[0]] = decodeURIComponent(values[1]);
             });
         }
         
@@ -48,14 +48,14 @@ export default class URI {
 
     private static parsePath (url: string): string {
         let path = '';
-        const firstIndexOfPath = url.indexOf('/');
+        const firstIndexOfPath = url.indexOf('/') + 1;
         if (firstIndexOfPath === -1) {
             return '';
         }
 
         url = url.replace(/\?|\#/, '?');
-        let lastIndexOfPath = url.indexOf('?') !== -1 ? url.indexOf('?') : url.length;
-        path = url.substring(firstIndexOfPath, lastIndexOfPath);
+        let lastIndexOfPath = url.indexOf('/', firstIndexOfPath);
+        path = lastIndexOfPath === -1 ? '' : url.substring(firstIndexOfPath, lastIndexOfPath);
         return path;
     }
 

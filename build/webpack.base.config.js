@@ -1,3 +1,9 @@
+/*
+ * @Author: wangjiaxin@leedarson.com 
+ * @Date: 2020-03-03 15:28:54 
+ * @Last Modified by: wangjiaxin@leedarson.com
+ * @Last Modified time: 2020-03-11 20:28:05
+ */
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -17,7 +23,7 @@ module.exports = function webpackBaseConfig (NODE_ENV = 'development') {
     const webpackConfig = {
         entry,
         output: {
-            path: resolve('./dist'),
+            path: resolve('./'),
             publicPath: config.staticPath,
             filename: `${config.filePath}js/${config.filenameHash ? '[name].[chunkhash:8]' : '[name]'}.js`,
             chunkFilename: `${config.filePath}js/${config.filenameHash ? '[name].[chunkhash:8]' : '[name]'}.js`
@@ -29,7 +35,7 @@ module.exports = function webpackBaseConfig (NODE_ENV = 'development') {
                 {
                     test: /\.ts$/,
                     loader: 'awesome-typescript-loader',
-                    exclude: /(node_modules)/,
+                    exclude: /(node_modules)/
                 },
                 {
                     test: /\.ts$/,

@@ -1,8 +1,13 @@
 {
     "presets": [
-        [ "stage-1"],
-        ["es2015", {"modules": false}],
+        ["@babel/preset-env", {
+          "modules": false,
+          "targets": {
+            "browsers": ["ie >= 8"]
+          },
+          "useBuiltIns": "usage"
+        }],
         "@babel/preset-typescript"
     ],
-    "plugins": ["transform-runtime"]
+    "plugins": ["@babel/plugin-transform-runtime"]
 }
