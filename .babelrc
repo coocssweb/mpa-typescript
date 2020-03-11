@@ -1,5 +1,6 @@
 {
     "presets": [
+<<<<<<< HEAD
         ["@babel/preset-env", {
           "modules": false,
           "targets": {
@@ -10,4 +11,17 @@
         "@babel/preset-typescript"
     ],
     "plugins": ["@babel/plugin-transform-runtime"]
+=======
+        [ "stage-1"],
+        ["es2015", {"modules": false}],
+        ["@babel/preset-typescript",  {
+            "modules": false,
+            "targets": {
+              "browsers": ["> 1%", "last 2 versions", "not ie <= 8"]
+            },
+            "useBuiltIns": "usage"
+          }]
+    ],
+    "plugins": ["transform-runtime", "@babel/plugin-transform-object-assign"]
+>>>>>>> 922d0ccb434053dd9453e075a421db7beb1c8b0b
 }
