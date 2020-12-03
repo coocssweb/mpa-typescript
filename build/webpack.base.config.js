@@ -1,9 +1,4 @@
-/*
- * @Author: wangjiaxin@leedarson.com 
- * @Date: 2020-03-03 15:28:54 
- * @Last Modified by: wangjiaxin@leedarson.com
- * @Last Modified time: 2020-03-11 20:28:05
- */
+
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
