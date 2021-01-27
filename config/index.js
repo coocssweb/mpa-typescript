@@ -42,7 +42,7 @@ module.exports = {
         filenameHash: false,
     },
     development: {
-        port: 9000,
+        port: 9001,
         devtool: 'source-map',
         NODE_ENV: 'development',
         HOST: 'dev.website.com',

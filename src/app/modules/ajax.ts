@@ -3,12 +3,12 @@
  * @author: 王佳欣
  * @email: 1974740999@qq.com
  */
-import { AjaxOptions, ContentType, XhrFields, JsonpOptions } from '../../interface';
+import { AjaxOptions, ContentType, JsonpOptions } from '../../interface';
 
 /**
  * ajax
  */
-function Ajax(options: AjaxOptions): Promise<any> {
+function Ajax(options: AjaxOptions): any {
     options = { ...Ajax.defaultOptions, ...options };
     const xmlHttp: XMLHttpRequest = new XMLHttpRequest();
 
@@ -40,17 +40,26 @@ function Ajax(options: AjaxOptions): Promise<any> {
         xmlHttp.withCredentials = options.xhrFields.withCredentials;
     }
 
-    return new Promise ((reslove, reject) => {
+    // when http request is not asynchronous
+    // options.async === false
+    if (options.async === false) {
+        xmlHttp.send(options.data ? options.data : null);
+        return xmlHttp.responseText;
+    }
+
+    // when http request is asynchronous
+    // options.async === true
+    return new Promise ((resolve, reject) => {
         xmlHttp.onreadystatechange = function () {
             if (xmlHttp.readyState !== 4) {
                 return;
             }
 
             if (xmlHttp.status >= 200 && xmlHttp.status <= 304) {
-                reslove(JSON.parse(xmlHttp.responseText));
+                resolve(JSON.parse(xmlHttp.responseText));
             } 
             else {
-                reject(JSON.parse(xmlHttp.responseText));
+                reject(JSON.parse(xmlHttp.responseText || "{}"));
             }
         };
 
