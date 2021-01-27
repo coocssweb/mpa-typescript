@@ -8,10 +8,9 @@ import { AjaxOptions, ContentType, JsonpOptions } from '../../interface';
 /**
  * ajax
  */
-function Ajax(options: AjaxOptions): any {
+function Ajax(options: AjaxOptions): Promise<any> | string {
     options = { ...Ajax.defaultOptions, ...options };
     const xmlHttp: XMLHttpRequest = new XMLHttpRequest();
-
     // define request data
     if (options.contentType = ContentType.Urlencoded) {
         const keysOfData = Object.keys(options.data);

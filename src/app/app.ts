@@ -31,7 +31,7 @@ App.prototype = {
         new Tip(options);
     },
 
-    $ajax: function (options: AjaxOptions): Promise<any> {
+    $ajax: function (options: AjaxOptions): Promise<any> | string {
         return ajax(options);
     },
 
