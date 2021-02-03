@@ -1,28 +1,57 @@
 class Storage {
+    // `prefix`: 缓存前缀, 实现namespace的功能, 防止重名
     static readonly prefix: string = '__';
-    private readonly splitCode = '|_|';
-    private readonly storage = localStorage || window.localStorage;
-    static readonly defauleExpiredTime = 30 * 24 * 60 * 60 * 1000;
 
-    constructor () {
+    // `splitCode`: 过期时间 和 缓存值之间的切割符, 如: '60000|_|abc'
+    static readonly splitCode: string = '|_|';
+
+    // storage support
+    static readonly storage = localStorage || window.localStorage;
+
+    // `defaultExpiredTime`： 默认30天过期
+    static readonly defaultExpiredTime = 30 * 24 * 60 * 60 * 1000;
+
+    private prefix: string;
+    
+    private splitCode: string;
+
+    constructor (prefix?: string, splitCode?: string) {
+        this.prefix = prefix || Storage.prefix;
+        this.splitCode = splitCode || Storage.splitCode;
     }
 
-    private getStorageKey (key:string) {
-        return `${Storage.prefix}${key}`;
+    /**
+     * 获取缓存key
+     * @param key 
+     */
+    private getStorageKey (key:string): string {
+        return `${this.prefix}${key}`;
     }
 
-    public setItem (key: string, value: any, expired: number = Storage.defauleExpiredTime) {
+    /**
+     * 设置缓存值
+     * @param key, storage 的 key
+     * @param value, storage 的 value
+     * @param expired, storage 的过期时间
+     */
+    public setItem (key: string, value: any, expired: number = Storage.defaultExpiredTime): void {
         const itemKey = this.getStorageKey(key);
-        const expiredTimestamp = +(new Date()) + expired;
-        this.storage.setItem(itemKey, `${expiredTimestamp}${this.splitCode}${value}`);
+        const date = new Date();
+        const expiredTimestamp = date.getTime() + expired;
+        Storage.storage.setItem(itemKey, `${expiredTimestamp}${this.splitCode}${value}`);
     }
 
-    public getItem (key: string) {
+    /**
+     * 获取缓存值
+     * @param key, 缓存的key 
+     */
+    public getItem (key: string): string {
         const itemKey = this.getStorageKey(key);
-        const localValue = this.storage.getItem(itemKey);
+        const value = Storage.storage.getItem(itemKey);
 
-        if (localValue) {
-            const localValueSplits = localValue.split(this.splitCode);
+        if (value) {
+            const localValueSplits = value.split(this.splitCode);
+            const currentTimestamp = (new Date()).getTime();
             if (+localValueSplits[0] > +(new Date())) {
                 return localValueSplits[1];
             }
@@ -33,10 +62,14 @@ class Storage {
         return null;
     }
 
-    public removeItem (key: string) {
+    /**
+     * 删除缓存
+     * @param key, 缓存的key
+     */
+    public removeItem (key: string): void {
         const itemKey = this.getStorageKey(key);
-        this.storage.removeItem(itemKey);
+        Storage.storage.removeItem(itemKey);
     }
 }
 
-export default new Storage();
+export default Storage;

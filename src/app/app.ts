@@ -19,7 +19,7 @@ function App (data: object, watchs: object) {
     this.$router = Router;
     this.$route = URI.parse(window.location.href);
     this.$statistic = Statistic;
-    this.$storage = Storage;
+    this.$storage = new Storage();
 }
 
 App.prototype = {
@@ -27,7 +27,7 @@ App.prototype = {
 
     init: EMPTY_FUNCTION,
 
-    $tip: function (options: TipOptions) {
+    $tip: function (options: TipOptions) : void {
         new Tip(options);
     },
 
@@ -43,7 +43,7 @@ App.prototype = {
         return new Confirm(options);
     },
 
-    _init: function () {
+    _init: function () : void {
         this.bindEvents();
         // get or set a property on this, relate to data[propertyName]
         if (this.data) {

@@ -107,15 +107,16 @@ new App({
         this.share = new Share('', null, shareInfo);
 
         // demo code for ajax
-        this.$ajax({
-            url: 'http://www.shuxia123.com/services/demos',
+        const result = this.$ajax({
+            url: 'https://www.shuxia123.com/services/projects',
             method: 'get',
             data: {
                 name: 'test'
-            }
-        }).then((result: any) => {
-            console.log(result);
+            },
+            async: false
         });
+        
+        JSON.parse(result)
 
         // demo code for audio
         const that = this;
